@@ -1,8 +1,10 @@
 const dotenv=require('dotenv')
 dotenv.config()
 
-let mySecret=process.env.MySecret//"I will never tell"
-let apikey=process.env.MyAPIKey//25653264523894723
+
+//import hidden fron .env
+let mySecret=process.env.MySecret
+let apikey=process.env.MyAPIKey
 
 console.log(mySecret)
 console.log(apikey)
