@@ -8,6 +8,21 @@ const userModel = require("./models/users.js")
 const { request } = require('http')
 const req = require('express/lib/request.js')
 
+const sessions = require("express-session")
+const cookieParser = require("cookie-parser") 
+
+const threeMiniutes = 3*60*1000
+const oneHour = 1*60*60*1000
+
+
+
+app.use(sessions({
+    secret: "SEcRET CODE", // this is typically stroed in the .env file
+    cookie:{maxAge:threeMiniutes} , 
+    resave: false,
+    saveUninitialized: false
+}))
+
 app.listen(3000, ()=>{
     console.log('listening on port 3000')
 })
@@ -16,8 +31,30 @@ app.use(express.static('public'))
 
 app.use(express.urlencoded({extended: false}))
 
-app.get('/app', (request, response)=>{
+function checkLoggedIn(request, response, nextAction){
+    if(request.session){
+        if(request.session.username){
+            nextAction()
+        }else{
+            request.session.destroy()
+            response.sendFile(path.join(__dirname, '/views', 'notloggedin.html'))
+        }
+    }
+    else{
+        request.session.destroy()
+        response.sendFile(path.join(__dirname, '/views', 'notloggedin.html'))
+    }
+}
+
+
+
+app.get('/app', checkLoggedIn, (request, response)=>{
+
     response.sendFile(path.join(__dirname, '/views', 'app.html'))
+})
+
+app.get('/profile',checkLoggedIn, (request, response)=>{  
+    response.sendFile(path.join(__dirname, '/views', 'profile.html'))
 })
 
 app.get('/login', (request, response)=>{
@@ -32,6 +69,13 @@ app.get('/logout', (request, response)=>{
     response.sendFile(path.join(__dirname, '/views', 'logout.html'))
 })
 
+app.post('/logout', (request, response)=>{
+    
+    request.session.destroy()
+    response.redirect("/")
+})
+
+
 app.get('/getposts', (request, response)=>{
     response.json({posts:posts.getPosts()}) // dont forget to prefix as it is required from elsewhere
 })
@@ -45,6 +89,7 @@ app.post("/newpost", (request, response)=>{
 
 app.post('/login', (request, response)=>{
     if(userModel.checkUser(request.body.username, request.body.password)){
+        request.session.username=request.body.username
         response.sendFile(path.join(__dirname, '/views', 'app.html'))
     } else{
         response.sendFile(path.join(__dirname, '/views', 'notloggedin.html'))
