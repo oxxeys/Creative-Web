@@ -17,7 +17,7 @@ I did find an existing website that does a couple of similar things to what I am
 Evidence of explorations
 To start the project I did a lot of exploring with what I wanted to do. Unfortunately I don't have many pictures from this stage as I did it before moving house where I accidentally binned a couple pages. To start with I simply came up with as many ideas as I could, then choosing my favourite (as can be seen in the first picture). From here I sketched out the two ideas that were viable and chose my favourite (Boxy!) 
 
-![alt text](https://github.com/oxxeys/Creative-Web/image(1).jpg?raw=true)
+![Idea Generation (1)!](https://github.com/oxxeys/Creative-Web/blob/main/Assets/img(1).jpg)
 
 
 How data will be used
