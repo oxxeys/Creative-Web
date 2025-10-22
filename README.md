@@ -3,7 +3,7 @@
 Hello! 
 This is my proposal for a web application.
 
-My web app concept is called Boxy! The web app will be based around a physical box which would have a qr code on it. Upon the qr code being scanned, the user would be taken to a map which would showcase where boxy has been before. They would be given the option to make a post about boxy. This post would contain the location boxy is in along with the potential for some text and an image. There would be a couple filters on the map that would show data in different ways (ie: where boxy was this time last year, where boxy was the most). The user would also be able to scroll through the posts/logs from previous users which could also be filtered.
+My web app concept is called *Boxy!* The web app will be based around a physical box which would have a qr code on it. Upon the qr code being scanned, the user would be taken to a map which would showcase where boxy has been before. They would be given the option to make a post about boxy. This post would contain the location boxy is in along with the potential for some text and an image. There would be a couple filters on the map that would show data in different ways (ie: where boxy was this time last year, where boxy was the most). The user would also be able to scroll through the posts/logs from previous users which could also be filtered.
 
 ## Existing alternatives and inspirations
 The project takes some direct inspiration from a 2010s internet trend, where people would send around an object such as a teddy bear to a friend. This friend would take a picture with it doing something cool then passing it onto a friend of their own, thus creating a cycle where the teddy was sent around the world.
