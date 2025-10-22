@@ -17,6 +17,8 @@ I did find an existing website that does a couple of similar things to what I am
 Evidence of explorations
 To start the project I did a lot of exploring with what I wanted to do. Unfortunately I don't have many pictures from this stage as I did it before moving house where I accidentally binned a couple pages. To start with I simply came up with as many ideas as I could, then choosing my favourite (as can be seen in the first picture). From here I sketched out the two ideas that were viable and chose my favourite (Boxy!) 
 
+![alt text](https://github.com/oxxeys/Creative-Web/image(1).jpg?raw=true)
+
 
 How data will be used
 The app will store the posts data, such as a username of who made the post and its content. I will also need to store the previous locations that boxy has been. These will be stored in an external database. I will also have to check if the user has opened the website from the qr code as otherwise they should not be able to post about boxy.
