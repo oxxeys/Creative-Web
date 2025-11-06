@@ -88,19 +88,20 @@ app.post('/logout', (request, response)=>{
 
 
 app.get('/getposts', async (request, response)=>{
-    response.json({posts: await posts.getLatestNPosts(3)}) // dont forget to prefix as it is required from elsewhere
+    response.json({posts: await posts.getLatestNPosts(8)}) // dont forget to prefix as it is required from elsewhere
 
 })
 
 app.post("/newpost", (request, response)=>{
     posts.addPost(request.body.message, request.session.username)
+    console.log(request.session.username)
     response.sendFile(path.join(__dirname, '/views', 'app.html'))
 })
 
 
 
-app.post('/login', (request, response)=>{
-    if(userModel.checkUser(request.body.username, request.body.password)){
+app.post('/login', async (request, response)=>{
+    if(await userModel.checkUser(request.body.username, request.body.password)){
         request.session.username=request.body.username
         response.sendFile(path.join(__dirname, '/views', 'app.html'))
     } else{

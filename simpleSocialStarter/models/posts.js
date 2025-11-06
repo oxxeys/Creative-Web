@@ -47,10 +47,9 @@ function getPosts(){
 async function getLatestNPosts(n=3){
     //return postData.get(-n).reverse()
     let foundData=[]
-    foundData.find({}).sort({"time": -1}).limit(n)
+    foundData = await postData.find({}).sort({"time": -1}).limit(n)
     return foundData
 }
-
 
 
 function addPost(message, user){
@@ -68,5 +67,5 @@ function addPost(message, user){
 module.exports={
     getPosts,
     addPost,
-    getLatestNPosts
+    getLatestNPosts,
 }
