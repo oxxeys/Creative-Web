@@ -14,6 +14,17 @@ const cookieParser = require("cookie-parser")
 const threeMiniutes = 3*60*1000
 const oneHour = 1*60*60*1000
 
+const dotenv = require('dotenv').config()
+const mongoDBUsername=process.env.mongoDBUsername
+const mongoDBPassword=process.env.mongoDBPassword
+const mongoAppName=process.env.mongoAppName
+console.log(mongoDBUsername, mongoDBPassword, mongoAppName )
+
+const connectionString = `mongodb+srv://${mongoDBUsername}:${mongoDBPassword}@cluster.lpfnqqx.mongodb.net/${mongoAppName}?retryWrites=true&w=majority`
+
+
+const mongoose = require("mongoose")
+mongoose.connect(connectionString)
 
 
 app.use(sessions({
@@ -76,12 +87,13 @@ app.post('/logout', (request, response)=>{
 })
 
 
-app.get('/getposts', (request, response)=>{
-    response.json({posts:posts.getPosts()}) // dont forget to prefix as it is required from elsewhere
+app.get('/getposts', async (request, response)=>{
+    response.json({posts: await posts.getLatestNPosts(3)}) // dont forget to prefix as it is required from elsewhere
+
 })
 
 app.post("/newpost", (request, response)=>{
-    posts.addPost(request.body.message, "Current User")
+    posts.addPost(request.body.message, request.session.username)
     response.sendFile(path.join(__dirname, '/views', 'app.html'))
 })
 
