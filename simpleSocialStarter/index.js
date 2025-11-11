@@ -108,20 +108,31 @@ app.post('/login', async (request, response)=>{
         response.sendFile(path.join(__dirname, '/views', 'notloggedin.html'))
     }
 })
-app.post('/register', (request, response)=>{
-    if(userModel.addUser(request.body.username, request.body.password)){
-        response.sendFile(path.join(__dirname, '/views', 'app.html'))
-    } else{
-        response.sendFile(path.join(__dirname, '/views', 'registration_failed.html'))
-    }
-
-})
 
 app.get('/getuser', (request, response)=>{
     response.json({user:users.getUser()})
 })
 
-app.post("/register", (request, response)=>{
-    user.addUser(request.body.username, request.body.password)
-    response.sendFile(path.join(__dirname, '/views', 'register.html'))
-})
+// app.post('/register', (request, response)=>{
+//     if(userModel.addUser(request.body.username, request.body.password)){
+//         response.sendFile(path.join(__dirname, '/views', 'app.html'))
+//     } else{
+//         response.sendFile(path.join(__dirname, '/views', 'registration_failed.html'))
+//     }
+
+// })
+
+
+// app.post("/register", (request, response)=>{
+//     user.addUser(request.body.username, request.body.password)
+//     response.sendFile(path.join(__dirname, '/views', 'register.html'))
+// })
+
+app.post('/register', async (request, response) => {
+    const success = await userModel.addUser(request.body.username, request.body.password);
+    if (success) {
+        response.sendFile(path.join(__dirname, '/views', 'app.html'));
+    } else {
+        response.sendFile(path.join(__dirname, '/views', 'registration_failed.html'));
+    }
+});
