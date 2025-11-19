@@ -64,6 +64,7 @@ function addPost(message, user){
 }
 
 
+
 module.exports={
     getPosts,
     addPost,

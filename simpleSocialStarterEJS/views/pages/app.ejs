@@ -16,29 +16,16 @@
 
                 <% posts.forEach(post=>{ %>
                     <li>
-                        <p>message: <%= post.message %> by user: <%= post.user %></p>
+                        <p>message: <%= post.message %> by user: <%= post.user %> with <%= post.likes %> likes</p>
+                        <% if(username!=post.user){ %>
+                            <form action="/postliked" method="POST">
+                                <input type="button" value="Like">
+                            </form>
+                            <% } %>
                     </li>
                     <% }) %>
 
             </ul>
-            <!-- <script>
-                const recentPosts = document.getElementById('recent-posts')
-
-                fetch('/getposts')
-                    .then(response => response.json())
-                    .then(processData)
-
-
-                function processData(data) {
-                    console.log(data)
-                    recentPosts.innerHTML = ""
-                    data.posts.forEach(post => {
-                        let li = document.createElement('li')
-                        li.innerText = `${post.message} by user: ${post.user}`
-                        recentPosts.appendChild(li)
-                    })
-                }
-            </script> -->
     </body>
 
     <%- include("../partials/footer") %>
