@@ -147,11 +147,6 @@ app.post("/postliked", async (request, response) => {
     //get number of likes
     await posts.amountOfLikes(request.body.postMessage)
 
-
-    //add 1 to number of likes
-
-
-
     //rerender app
     const latestPosts = await posts.getLatestNPosts(8)
     await response.render("pages/app",
@@ -221,7 +216,19 @@ app.post('/changefname', async (request, response) => {
     //sear db by username then update first name
     console.log(request.body.fname)
     await userModel.changeFirstName(request.session.username, request.body.fname)
-    request.body.fname = request.body.fname
+    request.session.fname = request.body.fname
+    console.log(request.body.fname)
+
+await response.render("pages/profile",
+        {
+            isAdmin: checkAdmin(request),
+            isLoggedIn: getLoggedStatus(request),
+            username: request.session.username,
+            fname: request.body.fname,
+            lname: request.session.lname,
+        }
+    )
+   
 });
 
 app.post('/changelname', async (request, response) => {
@@ -229,7 +236,17 @@ app.post('/changelname', async (request, response) => {
     //sear db by username then update last name
     console.log(request.body.lname)
     await userModel.changeLastName(request.session.username, request.body.lname)
-    request.body.lname = request.body.lname
+    request.session.lname = request.body.lname
+
+    await response.render("pages/profile",
+        {
+            isAdmin: checkAdmin(request),
+            isLoggedIn: getLoggedStatus(request),
+            username: request.session.username,
+            fname: request.session.fname,
+            lname: request.body.lname,
+        }
+    )
 });
 
 
