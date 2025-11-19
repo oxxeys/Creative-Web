@@ -268,4 +268,15 @@ function checkAdmin(request) {
 
 
 
-       
+// -- likes 
+// (only works by message id) 
+
+// -- user first name + last name
+
+// -- user edit profile
+
+// -- admin only log in 
+
+// admin can see users and posts and delete them (dont see passwords)
+
+// just need to configure this
