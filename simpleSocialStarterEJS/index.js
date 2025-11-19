@@ -52,13 +52,13 @@ function checkLoggedIn(request, response, nextAction) {
         } else {
             request.session.destroy()
             // response.sendFile(path.join(__dirname, '/views', 'notloggedin.html'))
-            response.render("pages/notloggedin", { isLoggedIn: getLoggedStatus(request) })
+            response.render("pages/notloggedin", { isLoggedIn: getLoggedStatus(request), isAdmin: checkAdmin(request), })
         }
     }
     else {
         request.session.destroy()
         // response.sendFile(path.join(__dirname, '/views', 'notloggedin.html'))
-        response.render("pages/notloggedin", { isLoggedIn: getLoggedStatus(request) })
+        response.render("pages/notloggedin", { isLoggedIn: getLoggedStatus(request),isAdmin: checkAdmin(request), })
     }
 }
 
@@ -70,6 +70,7 @@ app.get('/app', checkLoggedIn, async (request, response) => {
 
     response.render("pages/app",
         {
+            isAdmin: checkAdmin(request),
             isLoggedIn: getLoggedStatus(request),
             username: request.session.username,
             posts: await posts.getLatestNPosts(8)
@@ -78,14 +79,17 @@ app.get('/app', checkLoggedIn, async (request, response) => {
 })
 
 app.get('/index', checkLoggedIn, (request, response) => {
-    response.render("pages/index", { isLoggedIn: getLoggedStatus(request) })
+    response.render("pages/index", { isLoggedIn: getLoggedStatus(request), isAdmin: checkAdmin(request) })
 })
+
+//index isnt used?
 
 app.get('/profile', checkLoggedIn, async (request, response) => {
     //response.sendFile(path.join(__dirname, '/views', 'profile.html'))
     // response.render("pages/profile", { isLoggedIn: getLoggedStatus(request) })
     response.render("pages/profile",
         {
+            isAdmin: checkAdmin(request),
             isLoggedIn: getLoggedStatus(request),
             username: request.session.username,
             fname: request.session.fname,
@@ -98,17 +102,17 @@ app.get('/profile', checkLoggedIn, async (request, response) => {
 
 app.get('/login', (request, response) => {
     // response.sendFile(path.join(__dirname, '/views', 'login.html'))
-    response.render("pages/login", { isLoggedIn: getLoggedStatus(request) })
+    response.render("pages/login", { isLoggedIn: getLoggedStatus(request), isAdmin: checkAdmin(request)})
 })
 
 app.get('/register', (request, response) => {
     // response.sendFile(path.join(__dirname, '/views', 'register.html'))
-    response.render("pages/register", { isLoggedIn: getLoggedStatus(request) })
+    response.render("pages/register", { isLoggedIn: getLoggedStatus(request), isAdmin: checkAdmin(request)})
 })
 
 app.get('/logout', (request, response) => {
     // response.sendFile(path.join(__dirname, '/views', 'logout.html'))
-    response.render("pages/logout", { isLoggedIn: getLoggedStatus(request) })
+    response.render("pages/logout", { isLoggedIn: getLoggedStatus(request), isAdmin: checkAdmin(request)})
 })
 
 app.post('/logout', (request, response) => {
@@ -129,6 +133,7 @@ app.post("/newpost", async (request, response) => {
     const latestPosts = await posts.getLatestNPosts(8)
     response.render("pages/app",
         {
+            isAdmin: checkAdmin(request),
             isLoggedIn: getLoggedStatus(request),
             username: request.session.username,
             posts: latestPosts
@@ -137,7 +142,26 @@ app.post("/newpost", async (request, response) => {
 })
 
 app.post("/postliked", async (request, response) => {
-    console.log("add a like")
+    
+    console.log(request.body.postMessage)
+    //get number of likes
+    await posts.amountOfLikes(request.body.postMessage)
+
+
+    //add 1 to number of likes
+
+
+
+    //rerender app
+    const latestPosts = await posts.getLatestNPosts(8)
+    await response.render("pages/app",
+        {
+            isAdmin: await checkAdmin(request),
+            isLoggedIn: getLoggedStatus(request),
+            username: request.session.username,
+            posts: latestPosts
+        }
+    )
 })
 
 
@@ -149,17 +173,19 @@ app.post('/login', async (request, response) => {
         request.session.username = request.body.username
         request.session.fname = userFromDB.fname
         request.session.lname = userFromDB.lname
+        request.session.admin = userFromDB.admin
 
         // response.render("pages/app",{isLoggedIn: getLoggedStatus(request)})
         response.render("pages/app",
             {
+                isAdmin: checkAdmin(request),
                 isLoggedIn: getLoggedStatus(request),
                 username: request.session.username,
                 posts: await posts.getLatestNPosts(8)
             }
         )
     } else {
-        response.render("pages/notloggedin", { isLoggedIn: getLoggedStatus(request) })
+        response.render("pages/notloggedin", { isLoggedIn: getLoggedStatus(request), isAdmin: checkAdmin(request), })
 
     }
 })
@@ -177,17 +203,26 @@ app.post('/register', async (request, response) => {
         
         response.render("pages/app",
             {
+                isAdmin: checkAdmin(request),
                 isLoggedIn: getLoggedStatus(request),
                 username: request.body.username,
-                posts: posts.getLatestNPosts(8)
+                posts: await posts.getLatestNPosts(8) //awaiting here as it fixed a error that occasionally popped up - not sure why but posts werent being loaded all the time
 
             })
     } else {
         // response.sendFile(path.join(__dirname, '/views', 'registration_failed.html'))
-        response.render("pages/notloggedin", { isLoggedIn: getLoggedStatus(request) })
+        response.render("pages/notloggedin", { isLoggedIn: getLoggedStatus(request), isAdmin: checkAdmin(request) })
     }
 });
 
+
+app.post('/changefname', async (request, response) => {
+    //take user input 
+    //sear db by username then update first name
+    console.log(request.body.fname)
+    await userModel.changeFirstName(request.session.username, request.body.fname)
+    request.body.fname = request.body.fname
+});
 
 app.post('/changelname', async (request, response) => {
     //take user input 
@@ -198,15 +233,22 @@ app.post('/changelname', async (request, response) => {
 });
 
 
-// app.post("/newpost", async (request, response) => {
-//     await posts.addPost(request.body.message, request.session.username)
-//     console.log(request.session.username)
-//     const latestPosts = await posts.getLatestNPosts(8)
-//     response.render("pages/app",
-//         {
-//             isLoggedIn: getLoggedStatus(request),
-//             username: request.session.username,
-//             posts: latestPosts
-//         }
-//     )
-// })
+app.get('/admin', checkLoggedIn, async (request, response) => {
+
+    response.render("pages/admin",
+        {
+            isAdmin: checkAdmin(request),
+            isLoggedIn: getLoggedStatus(request),
+            username: request.session.username,
+            posts: await posts.getLatestNPosts(8)
+        }
+    )
+})
+
+function checkAdmin(request) {
+    return request.session && request.session.admin === true
+}
+
+
+
+       

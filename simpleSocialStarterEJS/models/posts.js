@@ -63,10 +63,26 @@ function addPost(message, user){
     .catch(err=>{console.log("error", err)})
 }
 
+//get user details and then return them
+async function amountOfLikes(postMessage){
+    console.log("add a like")
 
+    // console.log(message)
+    let found = null
+    found = await postData.findOne({message:postMessage}).exec()
+    console.log(found)
+    console.log(found.likes)
+    newLikes = found.likes + 1
+
+    
+
+    console.log(await postData.findOneAndUpdate({message:postMessage}, {$set: {likes:newLikes}} ))
+    return await postData.findOneAndUpdate({message:postMessage}, {$set: {likes:newLikes}} )
+}
 
 module.exports={
     getPosts,
     addPost,
     getLatestNPosts,
+    amountOfLikes,
 }

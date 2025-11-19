@@ -10,6 +10,13 @@
 
             <p>this is your last name : <%= lname %>
             </p>
+
+            <form action="/changefname" method="POST">
+                <label for="fname">New first name:</label><br>
+                <input type="text" id="fname" name="fname" value="">
+                <button>Change first name</button>
+            </form>
+
             <form action="/changelname" method="POST">
                 <label for="lname">New last name:</label><br>
                 <input type="text" id="lname" name="lname" value="">

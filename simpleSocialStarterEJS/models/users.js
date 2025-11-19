@@ -6,12 +6,14 @@ const userSchema = new Schema({
     fname: String,
     lname: String,
     password: String,
+    admin: Boolean
 })
 
 const userData = model("users", userSchema)
 
-async function addUser(fname, lname, username, password){
+async function addUser(fname, lname, username, password, admin){
     let found = null
+    admin = false
     found = await userData.findOne({username:username}).exec()
     if(found){
         return false
@@ -20,7 +22,8 @@ async function addUser(fname, lname, username, password){
             fname: fname,
             lname: lname,
             username: username,
-            password: password
+            password: password,
+            admin:admin
         }
         await userData.create(newuser)
         return true
@@ -51,15 +54,23 @@ async function getUserDetails(username){
     return found
 }
 
+async function changeFirstName(username,fname){
+    await userData.findOneAndUpdate({username:username}, {$set: {fname:fname}} )
+    return console.log("Changed First name")
+
+}
+
 async function changeLastName(username,lname){
     await userData.findOneAndUpdate({username:username}, {$set: {lname:lname}} )
     return console.log("Changed Last name")
-
 }
+
+
 
 module.exports={
     checkUser,
     addUser,
     getUserDetails,
-    changeLastName
+    changeLastName,
+    changeFirstName
 }
