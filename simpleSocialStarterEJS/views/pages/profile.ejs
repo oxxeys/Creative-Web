@@ -1,7 +1,19 @@
 <%- include("../partials/header") %>
-<body>
-    <h2>Profile</h2>
-    <p>This is your user profile</p>
-    <%- include("../partials/nav") %>
-</body>
+
+    <body>
+        <h2>Profile</h2>
+        <p>This is your user profile</p>
+        <%- include("../partials/nav") %>
+
+            <p>this is your first name : <%= fname %>
+            </p>
+
+            <p>this is your last name : <%= lname %>
+            </p>
+            <form action="/changelname" method="POST">
+                <label for="lname">New last name:</label><br>
+                <input type="text" id="lname" name="lname" value="">
+                <button>Change last name</button>
+            </form>
+    </body>
     <%- include("../partials/footer") %>

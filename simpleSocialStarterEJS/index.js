@@ -81,10 +81,20 @@ app.get('/index', checkLoggedIn, (request, response) => {
     response.render("pages/index", { isLoggedIn: getLoggedStatus(request) })
 })
 
-app.get('/profile', checkLoggedIn, (request, response) => {
+app.get('/profile', checkLoggedIn, async (request, response) => {
     //response.sendFile(path.join(__dirname, '/views', 'profile.html'))
-    response.render("pages/profile", { isLoggedIn: getLoggedStatus(request) })
+    // response.render("pages/profile", { isLoggedIn: getLoggedStatus(request) })
+    response.render("pages/profile",
+        {
+            isLoggedIn: getLoggedStatus(request),
+            username: request.session.username,
+            fname: request.session.fname,
+            lname: request.session.lname,
+
+        }
+    )
 })
+
 
 app.get('/login', (request, response) => {
     // response.sendFile(path.join(__dirname, '/views', 'login.html'))
@@ -133,7 +143,13 @@ app.post("/postliked", async (request, response) => {
 
 app.post('/login', async (request, response) => {
     if (await userModel.checkUser(request.body.username, request.body.password)) {
+
+        const userFromDB = await userModel.getUserDetails(request.body.username);
+
         request.session.username = request.body.username
+        request.session.fname = userFromDB.fname
+        request.session.lname = userFromDB.lname
+
         // response.render("pages/app",{isLoggedIn: getLoggedStatus(request)})
         response.render("pages/app",
             {
@@ -152,28 +168,45 @@ app.get('/getuser', (request, response) => {
     response.json({ user: users.getUser() })
 })
 
-// app.post('/register', (request, response)=>{
-//     if(userModel.addUser(request.body.username, request.body.password)){
-//         response.sendFile(path.join(__dirname, '/views', 'app.html'))
-//     } else{
-//         response.sendFile(path.join(__dirname, '/views', 'registration_failed.html'))
-//     }
-
-// })
-
-
-// app.post("/register", (request, response)=>{
-//     user.addUser(request.body.username, request.body.password)
-//     response.sendFile(path.join(__dirname, '/views', 'register.html'))
-// })
 
 app.post('/register', async (request, response) => {
-    const success = await userModel.addUser(request.body.username, request.body.password);
+    console.log(request.body)
+    const success = await userModel.addUser(request.body.fname, request.body.lname, request.body.username, request.body.password);
     if (success) {
         // response.sendFile(path.join(__dirname, '/views', 'app.html'));
-        response.render("pages/app", { isLoggedIn: getLoggedStatus(request) })
+        
+        response.render("pages/app",
+            {
+                isLoggedIn: getLoggedStatus(request),
+                username: request.body.username,
+                posts: posts.getLatestNPosts(8)
+
+            })
     } else {
         // response.sendFile(path.join(__dirname, '/views', 'registration_failed.html'))
         response.render("pages/notloggedin", { isLoggedIn: getLoggedStatus(request) })
     }
 });
+
+
+app.post('/changelname', async (request, response) => {
+    //take user input 
+    //sear db by username then update last name
+    console.log(request.body.lname)
+    await userModel.changeLastName(request.session.username, request.body.lname)
+    request.body.lname = request.body.lname
+});
+
+
+// app.post("/newpost", async (request, response) => {
+//     await posts.addPost(request.body.message, request.session.username)
+//     console.log(request.session.username)
+//     const latestPosts = await posts.getLatestNPosts(8)
+//     response.render("pages/app",
+//         {
+//             isLoggedIn: getLoggedStatus(request),
+//             username: request.session.username,
+//             posts: latestPosts
+//         }
+//     )
+// })

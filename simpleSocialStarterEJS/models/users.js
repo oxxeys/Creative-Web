@@ -1,49 +1,24 @@
-
-
-// let userData=[
-//     {
-//         username: "user1",
-//         password: "123",
-//     },
-//     {
-//         username: "a",
-//         password: "a",
-//     }
-// ]
-
-// let nextuserID = userData.length
-// function addUser(username, password){
-//     let found=userData.find(thisUser=>thisUser.username==username)
-//     if(found){
-//         return false
-//     }else{
-//         let newuser ={ 
-//             userID: nextuserID,
-//             username: username,
-//             password: password
-//         }
-//         userData.push(newuser)
-//         return true
-//     }
-// }
-
 const mongoose=require("mongoose")
 const {Schema, model} = mongoose
 
 const userSchema = new Schema({
     username: String,
+    fname: String,
+    lname: String,
     password: String,
 })
 
 const userData = model("users", userSchema)
 
-async function addUser(username, password){
+async function addUser(fname, lname, username, password){
     let found = null
     found = await userData.findOne({username:username}).exec()
     if(found){
         return false
     }else{
         let newuser ={ 
+            fname: fname,
+            lname: lname,
             username: username,
             password: password
         }
@@ -67,7 +42,24 @@ async function checkUser(username, password){
     }
 }
 
+
+//get user details and then return them
+async function getUserDetails(username){
+    let found = null
+    found = await userData.findOne({username:username}).exec()
+    //console.log(found)
+    return found
+}
+
+async function changeLastName(username,lname){
+    await userData.findOneAndUpdate({username:username}, {$set: {lname:lname}} )
+    return console.log("Changed Last name")
+
+}
+
 module.exports={
     checkUser,
-    addUser
+    addUser,
+    getUserDetails,
+    changeLastName
 }

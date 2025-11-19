@@ -19,7 +19,8 @@
                         <p>message: <%= post.message %> by user: <%= post.user %> with <%= post.likes %> likes</p>
                         <% if(username!=post.user){ %>
                             <form action="/postliked" method="POST">
-                                <input type="button" value="Like">
+                                <!-- <input type="button" value="Like"> -->
+                                <button>Like</button>
                             </form>
                             <% } %>
                     </li>
