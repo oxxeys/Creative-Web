@@ -63,5 +63,5 @@ module.exports={
     addPost,
     getLatestNPosts,
     amountOfLikes,
-    findPost
+    findPost,
 }

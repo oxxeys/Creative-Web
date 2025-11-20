@@ -27,9 +27,9 @@
             <h4>Users</h4>
             <ul id="users">
 
-                <% posts.forEach(post=>{ %>
+                <% userModel.forEach(userModel=>{ %>
                     <li>
-                        <p>message: <%= post.message %> by user: <%= post.user %> with <%= post.likes %> likes</p>
+                        <p>user: <%= userModel.username %></p>
                         
                             <form action="/deleteUser" method="POST">
                                 <!-- <input type="button" value="Like"> -->

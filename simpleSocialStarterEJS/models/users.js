@@ -65,12 +65,27 @@ async function changeLastName(username,lname){
     return console.log("Changed Last name")
 }
 
+async function getUserList(n=100){
+    //return postData.get(-n).reverse()
+    let foundData=[]
+    foundData = await userData.find({}).limit(n)
+    return foundData
+}
 
+async function findUser(deletePostMessage){
+
+    let found = null
+    found = await userData.findOne({message:deletePostMessage}).exec()
+
+    return await userData.findOneAndDelete({message:deletePostMessage})
+}
 
 module.exports={
     checkUser,
     addUser,
     getUserDetails,
     changeLastName,
-    changeFirstName
+    changeFirstName,
+    getUserList,
+    findUser
 }

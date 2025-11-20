@@ -196,7 +196,14 @@ app.post('/register', async (request, response) => {
     if (success) {
         // response.sendFile(path.join(__dirname, '/views', 'app.html'));
 
-        response.render("pages/app",
+        // const userFromDB = await userModel.getUserDetails(request.body.username);
+
+        // request.session.username = request.body.username
+        // request.session.fname = userFromDB.fname
+        // request.session.lname = userFromDB.lname
+        // request.session.admin = userFromDB.admin
+
+        response.render("pages/index",
             {
                 isAdmin: checkAdmin(request),
                 isLoggedIn: getLoggedStatus(request),
@@ -257,7 +264,8 @@ app.get('/admin', checkLoggedIn, async (request, response) => {
             isAdmin: checkAdmin(request),
             isLoggedIn: getLoggedStatus(request),
             username: request.session.username,
-            posts: await posts.getLatestNPosts(8)
+            posts: await posts.getLatestNPosts(8),
+            userModel: await userModel.getUserList(1000)
         }
     )
 })
@@ -282,12 +290,34 @@ app.post("/deletePost", async (request, response) => {
             isAdmin: await checkAdmin(request),
             isLoggedIn: getLoggedStatus(request),
             username: request.session.username,
-            posts: latestPosts
+            posts: latestPosts,
+            userModel: await userModel.getUserList(1000)
         }
     )
 })
 
-// send in users (same as posts) 
+app.post("/deleteUser", async (request, response) => {
+
+    // delete using deleteOne 
+
+
+    //get post clicked
+    await userModel.findUser(request.body.deletePostMessage)
+
+    //rerender app
+    const latestPosts = await posts.getLatestNPosts(8)
+    await response.render("pages/admin",
+        {
+            isAdmin: await checkAdmin(request),
+            isLoggedIn: getLoggedStatus(request),
+            username: request.session.username,
+            posts: latestPosts,
+            userModel: await userModel.getUserList(1000)
+        }
+    )
+})
+
+
 
 // -- likes
 // (only works by message id)
@@ -300,4 +330,3 @@ app.post("/deletePost", async (request, response) => {
 
 // admin can see users and posts and delete them (dont see passwords)
 
-// just need to configure this
