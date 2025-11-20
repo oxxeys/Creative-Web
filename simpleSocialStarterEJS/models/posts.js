@@ -1,31 +1,3 @@
-
-// let postData=[
-//     {
-//         postid: 0,
-//         message:"Hi!",
-//         user: "Dave"
-//     },
-//     {
-//         postid: 1,
-//         message:"This is really cool!",
-//         user: "Dave"
-//     },
-//     {
-//         postid: 2,
-//         message:"Im a random person",
-//         user: "Jessie"
-//     }
-//     ,
-//     {
-//         postid: 3,
-//         message:"I a post!",
-//         user: "Jundabelle"
-//     }
-// ]
-
-// let nextPostID = postData.length
-
-
 const mongoose=require("mongoose")
 
 const {Schema, model} = mongoose
@@ -74,10 +46,16 @@ async function amountOfLikes(postMessage){
     console.log(found.likes)
     newLikes = found.likes + 1
 
-    
-
     console.log(await postData.findOneAndUpdate({message:postMessage}, {$set: {likes:newLikes}} ))
     return await postData.findOneAndUpdate({message:postMessage}, {$set: {likes:newLikes}} )
+}
+
+async function findPost(deletePostMessage){
+
+    let found = null
+    found = await postData.findOne({message:deletePostMessage}).exec()
+
+    return await postData.findOneAndDelete({message:deletePostMessage})
 }
 
 module.exports={
@@ -85,4 +63,5 @@ module.exports={
     addPost,
     getLatestNPosts,
     amountOfLikes,
+    findPost
 }

@@ -10,12 +10,32 @@
                 <% posts.forEach(post=>{ %>
                     <li>
                         <p>message: <%= post.message %> by user: <%= post.user %> with <%= post.likes %> likes</p>
-                        <% if(username!=post.user){ %>
+                        
                             <form action="/deletePost" method="POST">
+                                <input id=POSTID name=deletePostMessage type="hidden" value="<%= post.message %>">
                                 <!-- <input type="button" value="Like"> -->
                                 <button>Delete</button>
                             </form>
-                            <% } %>
+                            
+                    </li>
+                    <% }) %>
+
+            </ul>
+
+
+            
+            <h4>Users</h4>
+            <ul id="users">
+
+                <% posts.forEach(post=>{ %>
+                    <li>
+                        <p>message: <%= post.message %> by user: <%= post.user %> with <%= post.likes %> likes</p>
+                        
+                            <form action="/deleteUser" method="POST">
+                                <!-- <input type="button" value="Like"> -->
+                                <button>Delete</button>
+                            </form>
+                            
                     </li>
                     <% }) %>
 

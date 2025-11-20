@@ -58,7 +58,7 @@ function checkLoggedIn(request, response, nextAction) {
     else {
         request.session.destroy()
         // response.sendFile(path.join(__dirname, '/views', 'notloggedin.html'))
-        response.render("pages/notloggedin", { isLoggedIn: getLoggedStatus(request),isAdmin: checkAdmin(request), })
+        response.render("pages/notloggedin", { isLoggedIn: getLoggedStatus(request), isAdmin: checkAdmin(request), })
     }
 }
 
@@ -102,17 +102,17 @@ app.get('/profile', checkLoggedIn, async (request, response) => {
 
 app.get('/login', (request, response) => {
     // response.sendFile(path.join(__dirname, '/views', 'login.html'))
-    response.render("pages/login", { isLoggedIn: getLoggedStatus(request), isAdmin: checkAdmin(request)})
+    response.render("pages/login", { isLoggedIn: getLoggedStatus(request), isAdmin: checkAdmin(request) })
 })
 
 app.get('/register', (request, response) => {
     // response.sendFile(path.join(__dirname, '/views', 'register.html'))
-    response.render("pages/register", { isLoggedIn: getLoggedStatus(request), isAdmin: checkAdmin(request)})
+    response.render("pages/register", { isLoggedIn: getLoggedStatus(request), isAdmin: checkAdmin(request) })
 })
 
 app.get('/logout', (request, response) => {
     // response.sendFile(path.join(__dirname, '/views', 'logout.html'))
-    response.render("pages/logout", { isLoggedIn: getLoggedStatus(request), isAdmin: checkAdmin(request)})
+    response.render("pages/logout", { isLoggedIn: getLoggedStatus(request), isAdmin: checkAdmin(request) })
 })
 
 app.post('/logout', (request, response) => {
@@ -142,7 +142,7 @@ app.post("/newpost", async (request, response) => {
 })
 
 app.post("/postliked", async (request, response) => {
-    
+
     console.log(request.body.postMessage)
     //get number of likes
     await posts.amountOfLikes(request.body.postMessage)
@@ -195,7 +195,7 @@ app.post('/register', async (request, response) => {
     const success = await userModel.addUser(request.body.fname, request.body.lname, request.body.username, request.body.password);
     if (success) {
         // response.sendFile(path.join(__dirname, '/views', 'app.html'));
-        
+
         response.render("pages/app",
             {
                 isAdmin: checkAdmin(request),
@@ -219,7 +219,7 @@ app.post('/changefname', async (request, response) => {
     request.session.fname = request.body.fname
     console.log(request.body.fname)
 
-await response.render("pages/profile",
+    await response.render("pages/profile",
         {
             isAdmin: checkAdmin(request),
             isLoggedIn: getLoggedStatus(request),
@@ -228,7 +228,7 @@ await response.render("pages/profile",
             lname: request.session.lname,
         }
     )
-   
+
 });
 
 app.post('/changelname', async (request, response) => {
@@ -267,15 +267,36 @@ function checkAdmin(request) {
 }
 
 
+app.post("/deletePost", async (request, response) => {
 
-// -- likes 
-// (only works by message id) 
+    // delete using deleteOne 
+
+
+    //get post clicked
+    await posts.findPost(request.body.deletePostMessage)
+
+    //rerender app
+    const latestPosts = await posts.getLatestNPosts(8)
+    await response.render("pages/admin",
+        {
+            isAdmin: await checkAdmin(request),
+            isLoggedIn: getLoggedStatus(request),
+            username: request.session.username,
+            posts: latestPosts
+        }
+    )
+})
+
+// send in users (same as posts) 
+
+// -- likes
+// (only works by message id)
 
 // -- user first name + last name
 
 // -- user edit profile
 
-// -- admin only log in 
+// -- admin only log in
 
 // admin can see users and posts and delete them (dont see passwords)
 
