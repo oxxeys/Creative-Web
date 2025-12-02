@@ -1,3 +1,5 @@
+<!-- this is the root folder of the projecrt -->
+
 <template>
   <div id="App">
     <nav class="navbar navbar-expand navbar-dark bg-dark">

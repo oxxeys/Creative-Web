@@ -23,7 +23,7 @@
           class="list-group-item"
           :class="{ active: index === currentIndex }"
           v-for="(tutorial, index) in tutorials"
-          :key="tutorial.id"
+          :key="tutorial._id"
           @click="setActiveTutorial(tutorial, index)"
         >
           {{ tutorial.title }}
@@ -51,7 +51,7 @@
 
         <router-link
           class="badge badge-warning"
-          :to="'/tutorials/' + currentTutorial.id"
+          :to="'/post/' + currentTutorial._id"
         >
           Edit
         </router-link>

@@ -1,3 +1,4 @@
 TO DO 
  
-make applicable to boxy
+Strip away whats not needed 
+
