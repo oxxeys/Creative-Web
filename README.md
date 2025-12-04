@@ -28,7 +28,16 @@ I plan to host on azure, though I have been looking into Vercel if azure does no
 ## UI/UX considerations
 I made a number of considerations when creating my layout design for Boxy! I wrote a lot of my thoughts down on a paper as I came up with them, later incorporating them into the design. One example of one consideration I made was whether I should have the clickable boxes throughout the site be represented as cardboard boxes. While this would stray slightly from button convention on the rest of the web, it would add a tactile feeling to the app which would greatly tie in with the idea that boxy is both a digital and physical experience. 
 
+
+![Design Mocup (Mobile (non QR))!](https://github.com/oxxeys/Creative-Web/blob/main/Assets/DesignMockups(1).jpg)
+![Design Mocup (Mobile (QR scanned))!](https://github.com/oxxeys/Creative-Web/blob/main/Assets/DesignMockups(2).jpg)
+![Design Mocup (Desktop)!](https://github.com/oxxeys/Creative-Web/blob/main/Assets/DesignMockups(3).jpg)
+
+
 I have run through the design numerous times on paper and asked a peer to also run through it to ensure that the app would be accessible and simple to use for new users. I also did this again with the figma version of the app I created.
+
+![Design Considerations (1)!](https://github.com/oxxeys/Creative-Web/blob/main/Assets/DesginConsiderations(1).jpg)
+![Design Considerations (2)!](https://github.com/oxxeys/Creative-Web/blob/main/Assets/DesginConsiderations(2).jpg)
 
 The figma file can be found here: 
 [Figma Link](https://www.figma.com/design/wlGfyp2M1Wj4TisbWtV0Yz/Creative-Web?node-id=0-1&t=qSsecnT9a5kzYI6Q-1)
@@ -83,4 +92,3 @@ Using vue has required a restructuring of my server file compared to the simple 
 
 
 
-![Idea Generation (1)!](https://github.com/oxxeys/Creative-Web/blob/main/Assets/img(1).jpg)
