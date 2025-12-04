@@ -1,18 +1,17 @@
 //set up tutorial schema
 
 module.exports = mongoose => {
-  const Tutorial = mongoose.model(
-    "tutorial",
+  const UserModel = mongoose.model(
+    "userModel",
     mongoose.Schema(
       {
-        title: String,
-        description: String,
-        published: Boolean
+      username: String,
+      password: String,
+      admin: Boolean
       },
-      //ADD GELOCATION CALL HERE
       { timestamps: true } // gives timestamps for when created without having to use date()
     )
   );
 
-  return Tutorial;
+  return UserModel;
 };
