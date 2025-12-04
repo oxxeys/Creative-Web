@@ -1,3 +1,5 @@
+//set up tutorial schema
+
 module.exports = mongoose => {
   const Tutorial = mongoose.model(
     "tutorial",

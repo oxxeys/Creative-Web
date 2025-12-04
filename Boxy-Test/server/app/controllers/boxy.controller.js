@@ -1,3 +1,4 @@
+// get db obj, then parse tutorial obj from it
 const db = require("../models");
 const Tutorial = db.tutorials;
 
@@ -5,9 +6,6 @@ const Tutorial = db.tutorials;
 exports.create = (req, res) => {
 
 
-
-
-    
   // Validate request
   if (!req.body.title) {
     res.status(400).send({ message: "Content can not be empty!" });
@@ -33,7 +31,6 @@ exports.create = (req, res) => {
           err.message || "Some error occurred while creating the Tutorial."
       });
     });
-
 };
 
 // Retrieve all Tutorials from the database.
