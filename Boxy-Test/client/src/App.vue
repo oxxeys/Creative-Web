@@ -12,9 +12,12 @@
         <li class="nav-item">
           <router-link to="/postAdd" class="nav-link">Add</router-link>
         </li>
+        <li class="nav-item">
+          <router-link to="/createUser" class="nav-link">login</router-link>
+        </li>
       </div>
     </nav>
-
+    
     <div class="container mt-3">
       <router-view />
     </div>

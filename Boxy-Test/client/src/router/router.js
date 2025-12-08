@@ -5,6 +5,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import PostList from '../components/PostList.vue';
 import Post from '../components/Post.vue';
 import AddPost from '../components/AddPost.vue';
+import Register from '../components/Register.vue';
 
 const routes = [
   {
@@ -22,6 +23,11 @@ const routes = [
     path: '/postAdd',
     name: 'add',
     component: AddPost,
+  },
+    {
+    path: '/createUser',
+    name: 'createUser',
+    component: Register,
   },
 ];
 

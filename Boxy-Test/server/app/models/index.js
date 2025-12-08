@@ -11,5 +11,6 @@ const db = {};
 db.mongoose = mongoose;
 db.url = dbConfig.url;
 db.tutorials = require("./boxyPost.model.js")(mongoose);
+db.userModel = require("./boxyUser.model.js")(mongoose);
 
 module.exports = db;

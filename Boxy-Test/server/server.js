@@ -7,9 +7,21 @@ const cors = require("cors");
 
 const app = express();
 
-// get db object from /models 
-const db = require("./app/models");
+const sessions = require("express-session")
+const cookieParser = require("cookie-parser")
 
+const threeMiniutes = 3 * 60 * 1000
+const oneHour = 1 * 60 * 60 * 1000
+
+app.use(sessions({
+    secret: "SEcRET CODE", // this is typically stroed in the .env file
+    cookie: { maxAge: threeMiniutes },
+    resave: false,
+    saveUninitialized: false
+}))
+
+// get db object from /models (defaults to index.js)
+const db = require("./app/models");
 
 //attempt to connect to the db - essentially just setting it up here but doing nothing with it
 const mongoose = require("mongoose")
@@ -23,13 +35,14 @@ mongoose.connect(db.url)
   });
 
 
-// set up where we allow data requests to come from 
-var corsOptions = {
-  origin: "http://localhost:5173" 
-};
 
-//cors allows the frontend to access the server due to running on diffrent ports
-app.use(cors());
+
+// cors allows the frontend to access the server due to running on diffrent ports
+// origin set up where we allow data requests to come from 
+app.use(cors({
+  origin:"http://localhost:5173",
+  credentials: true,
+})); // this was fixed using chatgpt asking why cookie parser wouldnt work -> cors was blocking cookies
 
 // parses application/json
 app.use(express.json());       
@@ -44,6 +57,7 @@ app.get("/", (req, res) => {
 
 // call routes - which returns 
 require("./app/routes/boxy.routes")(app);
+require("./app/routes/userAuthenticate.routes")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;

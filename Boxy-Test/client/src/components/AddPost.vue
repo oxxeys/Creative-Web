@@ -3,25 +3,12 @@
     <div v-if="!submitted">
       <div class="form-group">
         <label for="title">Title</label>
-        <input
-          type="text"
-          class="form-control"
-          id="title"
-          required
-          v-model="tutorial.title"
-          name="title"
-        />
+        <input type="text" class="form-control" id="title" required v-model="tutorial.title" name="title" />
       </div>
 
       <div class="form-group">
         <label for="description">Description</label>
-        <input
-          class="form-control"
-          id="description"
-          required
-          v-model="tutorial.description"
-          name="description"
-        />
+        <input class="form-control" id="description" required v-model="tutorial.description" name="description" />
       </div>
 
       <button @click="saveTutorial" class="btn btn-success">Submit</button>

@@ -7,9 +7,10 @@ module.exports = mongoose => {
       {
       username: String,
       password: String,
-      admin: Boolean
+      email: String,
+      admin: Boolean // default false
       },
-      { timestamps: true } // gives timestamps for when created without having to use date()
+      { timestamps: true } // tracks when the user account was made
     )
   );
 
