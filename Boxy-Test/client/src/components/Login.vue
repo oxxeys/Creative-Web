@@ -7,17 +7,6 @@
                     name="username" />
             </div>
 
-            <!-- 
-      <input
-          type="text"
-          class="form-control" - set the class
-          id="username" - gives element a id 
-          required - makes it a required element
-          v-model="user.username" - listens and changes data in form upon user changing it 
-          name="username"
-        />
-      -->
-
             <div class="form-group">
                 <!-- set label for form the id correlates to -->
                 <label for="password">Password</label>
@@ -25,17 +14,11 @@
                     name="password" />
             </div>
 
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="text" class="form-control" id="email" required v-model="user.email" name="email" />
-            </div>
-
-
-            <button @click="saveUser" class="btn btn-success">Submit</button>
+            <button @click="loginUser" class="btn btn-success">Submit</button>
         </div>
 
         <div v-else>
-            <h4>You submitted successfully!</h4>
+            <h4>You logged in successfully!</h4>
             <button class="btn btn-success" @click="newUser">Add</button>
         </div>
     </div>
@@ -50,37 +33,34 @@ const user = reactive({
     _id: null,
     username: "",
     password: "",
-    email: "",
 });
 
 // submitted flag
 const submitted = ref(false);
 
 // save user method
-const saveUser = async () => {
-    const data = {
+const loginUser = async () => {
+    const data = { // data to sennd in 
         username: user.username,
         password: user.password,
-        email: user.email,
     };
 
     try {
-        const response = await userAuthServices.create(data);
-        user.id = response.data._id;
-        console.log(response.data);
+        const response = await userAuthServices.Login(data); // send data in then wait
+        // user.id = response.data._id;
+        // console.log(response.data);
         submitted.value = true;
     } catch (e) {
         console.error(e);
     }
 };
 
-// reset form for new user
+// reset form
 const newUser = () => {
     submitted.value = false;
     user._id= null;
     user.username= "";
     user.password= "";
-    user.email= "";
 };
 </script>
 

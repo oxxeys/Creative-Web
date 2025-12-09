@@ -9,7 +9,7 @@ module.exports = app => {
   router.post("/createUser", authenticate.createUser);
 
   // login user
-  router.post("/login", authenticate.login);
+  router.post("/Login", authenticate.Login);
 
   // change the route of /create user to be /authenticate/boxy/createUser 
   app.use('/api/authenticate/boxy', router);

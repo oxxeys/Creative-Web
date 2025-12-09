@@ -6,6 +6,7 @@ import PostList from '../components/PostList.vue';
 import Post from '../components/Post.vue';
 import AddPost from '../components/AddPost.vue';
 import Register from '../components/Register.vue';
+import Login from '../components/Login.vue';
 
 const routes = [
   {
@@ -28,6 +29,11 @@ const routes = [
     path: '/createUser',
     name: 'createUser',
     component: Register,
+  },
+      {
+    path: '/Login',
+    name: 'Login',
+    component: Login,
   },
 ];
 

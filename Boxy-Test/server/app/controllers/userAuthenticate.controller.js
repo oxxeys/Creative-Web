@@ -34,7 +34,7 @@ exports.createUser = (req, res) => {
 
 // Login User 
 // async as to wait for db to reply
-exports.login = async (req, res) => {
+exports.Login = async (req, res) => {
 
   //take in username and password from user
   var username = req.body.username
