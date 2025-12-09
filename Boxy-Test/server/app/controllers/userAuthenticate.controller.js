@@ -32,15 +32,16 @@ exports.createUser = (req, res) => {
 };
 
 
-// Login User
-exports.login = (req, res) => {
+// Login User 
+// async as to wait for db to reply
+exports.login = async (req, res) => {
 
   //take in username and password from user
 
   //call db and check if username exists in db
 
   // call db
-  let user = userModel.findOne({ username: req.body.username }).exec();
+  let user = await userModel.findOne({ username: req.body.username }).exec();
 
   //check username exists in db
   if (user) // if invalid go to else
@@ -99,3 +100,10 @@ exports.login = (req, res) => {
     });
   }
 };
+
+
+// LogOut
+exports.logOut = async (req, res) => {
+  //destory session therefore logged out
+  request.session.destroy()
+}
