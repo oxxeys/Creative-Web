@@ -37,7 +37,7 @@ exports.createUser = (req, res) => {
 exports.login = async (req, res) => {
 
   //take in username and password from user
-
+  var username = req.body.username
   //call db and check if username exists in db
 
   // call db
@@ -46,57 +46,26 @@ exports.login = async (req, res) => {
   //check username exists in db
   if (user) // if invalid go to else
   {
-    //check password
-
-    //set session info to user
-
-    //return login successful
-  }
-  else{
-    res.status(400).send({
-      message:
-        err.message || "Password wrong!"
-    });
-  }
-
-
-
-
-  async function checkUser(username, password) {
-    //return bool if user is there
-
-    let found = null
-    found = await userData.findOne({ username: username }).exec()
-
-    if (found) { // js treats a variable with a value as true, var with no value is false
-      return found.password == password // checks password - if it is same then it will return true
-    } else {
-      return false
+    //check password from db against password from user
+    if (user.password == req.body.password) {
+      //set session info to user
+      req.session.username = user.username;
+      // req.session.password = user.password;
+      req.session.email = user.email;
+      //return login successful
+      return res.send({ message: "Login successful" });
+    }
+    else {
+      res.status(400).send({
+        message:
+          err.message || "Password wrong!"
+      });
     }
   }
-
-  //take in username and password from user
-
-  //call db and check if username exists in db
-
- // const user = userModel.findOne({ username:req.body.username }).exec()
-
-  if (await checkUser(req.body.username, req.body.password)) {
-
-    //
-
-    const userFromDB = userModel.getUserDetails(req.body.username);
-    req.session.username = req.body.username
-    req.session.fname = userFromDB.fname
-    req.session.lname = userFromDB.lname
-    req.session.admin = userFromDB.admin
-
-    return res.send({ message: "Login successful" });
-
-  } else {
-    res.status(500).send({
+  else {
+    res.status(400).send({
       message:
-        err.message || "User does not exist in the db!"
+        err.message || "Username not found!"
     });
   }
 };
@@ -105,5 +74,5 @@ exports.login = async (req, res) => {
 // LogOut
 exports.logOut = async (req, res) => {
   //destory session therefore logged out
-  request.session.destroy()
+  req.session.destroy()
 }
