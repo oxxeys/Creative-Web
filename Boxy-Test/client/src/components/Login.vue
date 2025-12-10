@@ -27,6 +27,8 @@
 <script setup>
 import { reactive, ref } from "vue";
 import userAuthServices from "../services/userAuthServices.js";
+import { loggedInBool } from "../App.vue";
+
 
 // reactive tutorial object
 const user = reactive({
@@ -35,7 +37,7 @@ const user = reactive({
     password: "",
 });
 
-// submitted flag
+// submitted ref
 const submitted = ref(false);
 
 // login user
@@ -47,11 +49,11 @@ const loginUser = async () => {
 
     try {
         const response = await userAuthServices.Login(data); // send data in then wait
-        // user.id = response.data._id;
-        // console.log(response.data);
         
         // set value if logged in 
         if (response.data.username) {
+            sessionStorage.setItem("user", user.username);
+            loggedInBool.value = true;
             submitted.value = true;
         }
     } catch (e) {

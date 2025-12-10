@@ -34,7 +34,13 @@
 </template>
 
 <script>
-import { computed } from 'vue';
+import { ref } from 'vue';
+
+export const loggedInBool = ref(false)
+
+// ref({
+//   loggedIn: sessionStorage.getItem("user") !== null
+// });
 
 export default {
   name: "App",
@@ -42,13 +48,16 @@ export default {
   // code runs repeatedly, checking if user is logged in
   computed: {
     loggedIn() {
-      return sessionStorage.getItem("user") !== null
+      return loggedInBool.value
     }
   },
 
   methods: {
     logOut() {
-      return sessionStorage.removeItem("user")
+      sessionStorage.removeItem("user")
+      loggedInBool.value = false
+      //send user to login page
+      this.$router.push('/login')
     }
   }
 }
