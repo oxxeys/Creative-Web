@@ -81,6 +81,7 @@ exports.Login = async (req, res) => {
 exports.logOut = async (req, res) => {
   //destory session therefore logged out
   req.session.destroy()
+  res.send({message: "Logged Out"})
 }
 
 

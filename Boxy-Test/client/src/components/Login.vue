@@ -71,6 +71,7 @@
     
 import { reactive, ref } from "vue";
 import userAuthServices from "../services/userAuthServices.js";
+import { loggedInBool } from "../store/loginCheck.js";
 
 // reactive tutorial object
 const user = reactive({
@@ -86,18 +87,18 @@ const submitted = ref(false);
 
 // reset form for new user
 const newUser = () => {
-    submitted.value = false;
-    user._id= null;
-    user.username= "";
-    user.password= "";
-    user.email= "";
+    submitted.value = false
+    user._id= null
+    user.username= ""
+    user.password= ""
+    user.email= ""
 };
 
 // login code
 
 // import router so we can call the backend
-import { useRouter } from "vue-router";
-const router = useRouter();
+import { useRouter } from "vue-router"
+const router = useRouter()
 
 // login user
 const loginUser = async () => {
@@ -111,8 +112,9 @@ const loginUser = async () => {
         
         // set value if username is in db 
         if (response.data.username) {
-            submitted.value = true;
-            router.push("/posts");
+            loggedInBool.value = true
+            submitted.value = true
+            router.push("/posts")
         }
     } catch (e) {
         console.error(e);

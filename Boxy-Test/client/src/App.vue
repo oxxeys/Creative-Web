@@ -36,19 +36,14 @@
 <script>
 
 import boxyUserAuthService from "./services/userAuthServices";
-import { loggedInBool } from "./store/loginCheck";
+import { loggedInBool } from "./store/loginCheck.js";
 
 export default {
   name: "App",
 
-  data() {
-    return {
-      loggedIn: false
-    }
-  },
-
   computed: {
     loggedIn(){
+      console.log(loggedInBool.value)
       return loggedInBool.value
     }
   },
@@ -60,8 +55,10 @@ export default {
 
   methods: {
     async logOut() { // async as it calls to the server to check if user is logged in 
+      console.log(loggedInBool.value)
       await boxyUserAuthService.logout();
       loggedInBool.value = false;
+      console.log(loggedInBool.value)
       //send user to login page if logged out
       this.$router.push('/login')
     }
