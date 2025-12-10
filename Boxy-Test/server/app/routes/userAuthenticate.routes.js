@@ -18,6 +18,8 @@ module.exports = app => {
     });
   });
 
+  router.get("/logout", authenticate.logOut )
+
   // change the route of /create user to be /authenticate/boxy/createUser 
   app.use('/api/authenticate/boxy', router);
 }

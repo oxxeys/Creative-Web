@@ -34,29 +34,35 @@
 </template>
 
 <script>
-import { ref } from 'vue';
 
-export const loggedInBool = ref(false)
-
-// ref({
-//   loggedIn: sessionStorage.getItem("user") !== null
-// });
+import boxyUserAuthService from "./services/userAuthServices";
+import { loggedInBool } from "./store/loginCheck";
 
 export default {
   name: "App",
 
-  // code runs repeatedly, checking if user is logged in
+  data() {
+    return {
+      loggedIn: false
+    }
+  },
+
   computed: {
-    loggedIn() {
+    loggedIn(){
       return loggedInBool.value
     }
   },
 
+   async created() {
+    const res = await boxyUserAuthService.checkSession();
+    loggedInBool.value = !!res.data.username;
+  },
+
   methods: {
-    logOut() {
-      sessionStorage.removeItem("user")
-      loggedInBool.value = false
-      //send user to login page
+    async logOut() { // async as it calls to the server to check if user is logged in 
+      await boxyUserAuthService.logout();
+      loggedInBool.value = false;
+      //send user to login page if logged out
       this.$router.push('/login')
     }
   }

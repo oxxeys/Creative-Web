@@ -1,3 +1,5 @@
+// Front end routes are written here
+
 //import create router and create web history
 import { createRouter, createWebHistory } from 'vue-router';
 
@@ -17,16 +19,19 @@ const routes = [
     alias: '/posts',
     name: 'posts',
     component: PostList,
+    meta: { requiresAuth: true }
   },
   {
     path: '/post/:id',
     name: 'post-details',
     component: Post,
+    meta: { requiresAuth: true }
   },
   {
     path: '/postAdd',
     name: 'add',
     component: AddPost,
+    meta: { requiresAuth: true }
   },
     {
     path: '/createUser',
@@ -45,10 +50,11 @@ const router = createRouter({
   routes,
 });
 
+// router guard to check if user is logged in before accessing certain routes
+// this was done with the help of chat gpt 
 router.beforeEach(async (to, from, next) => {
   const res = await userAuth.checkSession();
-
-  if (!res.data.username && to.path !== "/Login") {
+  if (to.meta.requiresAuth && !res.data.username) {
     next("/Login");
   } else {
     next();
@@ -59,4 +65,4 @@ export default router;
 
 
 
-//chat gpt to turn vue 2 -> vue 3 code - https://www.bezkoder.com/vue-node-express-mongodb-mevn-crud/#Vuejs_Front-end
+//chat gpt to turn help vue 2 -> vue 3 code - https://www.bezkoder.com/vue-node-express-mongodb-mevn-crud/#Vuejs_Front-end
