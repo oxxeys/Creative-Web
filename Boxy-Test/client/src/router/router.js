@@ -9,14 +9,27 @@ import Post from '../components/Post.vue';
 import AddPost from '../components/AddPost.vue';
 import Register from '../components/Register.vue';
 import Login from '../components/Login.vue';
-
+import home from "../components/home.vue";
+import profile from "../components/profile.vue";
 
 import userAuth from "../services/userAuthServices";
 
 const routes = [
   {
     path: '/',
-    alias: '/posts',
+    alias: '/home',
+    name: 'home',
+    component: home,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/profile',
+    name: 'profile',
+    component: profile,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/posts',
     name: 'posts',
     component: PostList,
     meta: { requiresAuth: true }

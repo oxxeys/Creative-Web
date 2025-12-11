@@ -3,14 +3,23 @@
 <template>
   <div id="App">
     <!-- nav bar set here -->
-    <nav class="navbar navbar-expand navbar-dark bg-dark">
+    <nav class="navbar navbar-expand navbar-dark bg-dark d-flex justify-content-center">
       <router-link to="/" class="navbar-brand">Boxy!</router-link>
       <div class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <router-link to="/posts" class="nav-link">Posts</router-link>
-        </li>
-        <li class="nav-item">
+        <!-- <li v-if="loggedIn" class="nav-item">
+          <router-link to="/profile" class="nav-link">profile</router-link>
+        </li> -->
+
+        <!-- ADD ONLY ROUTED TO IF ON MOBILE && IF CAME FROM QR CODE -->
+        <!-- <li v-if="loggedIn" class="nav-item">
           <router-link to="/postAdd" class="nav-link">Add</router-link>
+        </li> -->
+        <li v-if="loggedIn" class="nav-item">
+          <router-link to="/profile" class="nav-link">Profile</router-link>
+        </li>
+        <li v-if="loggedIn" class="ms-auto nav-item">
+          <!-- <router-link to="/LogOut" class="nav-link">Log Out</router-link> -->
+          <button class="btn btn-link nav-link" @click="logOut()">Log Out</button>
         </li>
         <!-- show when logged out -->
         <li v-if="!loggedIn" class="nav-item">
@@ -20,10 +29,7 @@
           <router-link to="/Login" class="nav-link">Login</router-link>
         </li>
         <!-- show when logged in - this could be a button instead! -->
-        <li v-if="loggedIn" class="nav-item">
-          <!-- <router-link to="/LogOut" class="nav-link">Log Out</router-link> -->
-          <button class="btn btn-link nav-link" @click="logOut()">Log Out</button>
-        </li>
+
       </div>
     </nav>
 
@@ -42,23 +48,20 @@ export default {
   name: "App",
 
   computed: {
-    loggedIn(){
-      console.log(loggedInBool.value)
+    loggedIn() {
       return loggedInBool.value
     }
   },
 
-   async created() {
+  async created() {
     const res = await boxyUserAuthService.checkSession();
     loggedInBool.value = !!res.data.username;
   },
 
   methods: {
     async logOut() { // async as it calls to the server to check if user is logged in 
-      console.log(loggedInBool.value)
       await boxyUserAuthService.logout();
       loggedInBool.value = false;
-      console.log(loggedInBool.value)
       //send user to login page if logged out
       this.$router.push('/login')
     }

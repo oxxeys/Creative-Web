@@ -1,64 +1,55 @@
 <template>
   <div class="list row">
-    <div class="col-md-8">
-      <!-- <div class="input-group mb-3">
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Search by title"
-          v-model="title"
-        />
-        <div class="input-group-append">
-          <button class="btn btn-outline-secondary" type="button" @click="searchTitle">
-            Search
-          </button>
-        </div>
-      </div> -->
+
+    <!-- col - column -->
+    <!-- md - medium size screen styling -->
+    <!-- 6 - 50% width due to 6/12 -->
+    <div class="col-md-12 min-vh-100 p-3">
+      <h1>Boxy</h1>
+      <h4>Boxy</h4>
     </div>
 
-    <div class="col-md-6">
-      <h4>Tutorials List</h4>
-      <ul class="list-group">
-        <li
-          class="list-group-item"
-          :class="{ active: index === currentIndex }"
-          v-for="(tutorial, index) in tutorials"
-          :key="tutorial._id"
-          @click="setActiveTutorial(tutorial, index)"
-        >
-          {{ tutorial.title }}
-        </li>
-      </ul>
+    <div class="col-md-12 min-vh-100 p-3">
+      <h4>MAPBOX HERE</h4>
+    </div>
+    <div class="col-md-12 min-vh-100">
+      <div class="col-md-6 p-3">
+        <h4>Boxy</h4>
 
-      <!-- <button class="m-3 btn btn-sm btn-danger" @click="removeAllTutorials">
+        <ul class="list-group">
+          <li class="list-group-item" :class="{ active: index === currentIndex }" v-for="(tutorial, index) in tutorials"
+            :key="tutorial._id" @click="setActiveTutorial(tutorial, index)">
+            {{ tutorial.title }}
+          </li>
+        </ul>
+
+        <!-- <button class="m-3 btn btn-sm btn-danger" @click="removeAllTutorials">
         Remove All
       </button> -->
-    </div>
-
-    <div class="col-md-6">
-      <div v-if="currentTutorial">
-        <h4>Tutorial</h4>
-        <div>
-          <label><strong>Title:</strong></label> {{ currentTutorial.title }}
-        </div>
-        <div>
-          <label><strong>Description:</strong></label> {{ currentTutorial.description }}
-        </div>
-        <div>
-          <label><strong>Status:</strong></label>
-          {{ currentTutorial.published ? "Published" : "Pending" }}
-        </div>
-
-        <router-link
-          class="badge badge-warning"
-          :to="'/post/' + currentTutorial._id"
-        >
-          Edit
-        </router-link>
       </div>
-      <div v-else>
-        <br />
-        <p>Please click on a Tutorial...</p>
+
+      <div class="col-md-6 p-3">
+        <div v-if="currentTutorial">
+          <h4>Tutorial</h4>
+          <div>
+            <label><strong>Title:</strong></label> {{ currentTutorial.title }}
+          </div>
+          <div>
+            <label><strong>Description:</strong></label> {{ currentTutorial.description }}
+          </div>
+          <div>
+            <label><strong>Status:</strong></label>
+            {{ currentTutorial.published ? "Published" : "Pending" }}
+          </div>
+
+          <router-link class="badge badge-warning" :to="'/post/' + currentTutorial._id">
+            Edit
+          </router-link>
+        </div>
+        <div v-else>
+          <br />
+          <p>Please click on a Tutorial...</p>
+        </div>
       </div>
     </div>
   </div>

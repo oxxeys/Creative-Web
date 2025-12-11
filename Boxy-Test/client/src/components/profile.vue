@@ -2,19 +2,17 @@
     <div class="submit-form">
         <div v-if="!submitted">
             <div class="form-group">
-                <label for="title">Username</label>
-                <input type="text" class="form-control" id="username" required v-model="user.username"
-                    name="username" />
+                <p for="title">Username : </p>
+                <p class="">{{ username1 }}</p>
             </div>
 
             <div class="form-group">
                 <!-- set label for form the id correlates to -->
-                <label for="password">Password</label>
-                <input type="text" class="form-control" id="password" required v-model="user.password"
-                    name="password" />
+                <label for="changeUName">Change Username?</label>
+                <input type="text" class="form-control" id="changeUName" required v-model="user.username"
+                    name="changeUName" />
             </div>
-
-            <button @click="loginUser" class="btn btn-success">Submit</button>
+            <button @click="changeUser" class="btn btn-success">Change Username</button>
         </div>
 
         <div v-else>
@@ -25,17 +23,27 @@
 </template>
 
 <script setup>
-
-import { reactive, ref } from "vue";
+import { onBeforeMount, onMounted, reactive, ref } from "vue";
 import userAuthServices from "../services/userAuthServices.js";
 import { loggedInBool } from "../store/loginCheck.js";
 
+const username1 = ref("Username: ")
+
+onMounted(async () => {
+// get username
+    //make a call to the back end
+    const res = await userAuthServices.fetchUserInfo()
+// show username 
+console.log(res)
+username1.value = res.data.username
+
+// allow user to change thier username or password through a form 
+})
+
+
 // reactive tutorial object
 const user = reactive({
-    _id: null,
     username: "",
-    password: "",
-    email: "",
 });
 
 // submitted flag
@@ -57,15 +65,14 @@ const newUser = () => {
 import { useRouter } from "vue-router"
 const router = useRouter()
 
-// login user
-const loginUser = async () => {
-    const data = { // data to sennd in 
-        username: user.username,
-        password: user.password,
+// Change User
+const changeUser = async () => {
+    const data = { // data to send in (taken from the form the user fills out)
+        username: user.username
     };
 
     try {
-        const response = await userAuthServices.Login(data); // call login, sending in username + password which goes to db
+        const response = await userAuthServices.changeUsername(data); // call login, sending in username + password which goes to db
 
         // set value if username is in db 
         if (response.data.username) {

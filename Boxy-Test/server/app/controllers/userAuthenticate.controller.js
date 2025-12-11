@@ -39,11 +39,11 @@ exports.Login = async (req, res) => {
   var username = req.body.username
   //call db and check if username exists in db
 
-  // call db
+  // call db and check for username
   let user = await userModel.findOne({ username: req.body.username }).exec();
 
   //check username exists in db
-  if (user) // if invalid go to else
+  if (user) // if true
   {
     //check password from db against password from user
     if (user.password == req.body.password) {
@@ -75,6 +75,7 @@ exports.Login = async (req, res) => {
 
   
 }
+
 
 
 // LogOut
