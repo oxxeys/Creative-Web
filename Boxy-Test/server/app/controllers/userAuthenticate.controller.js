@@ -73,16 +73,47 @@ exports.Login = async (req, res) => {
     }
   }
 
-  
-}
 
+}
 
 
 // LogOut
 exports.logOut = async (req, res) => {
   //destory session therefore logged out
   req.session.destroy()
-  res.send({message: "Logged Out"})
+  res.send({ message: "Logged Out" })
 }
 
+// change username 
+exports.changeUsername = async (req, res) => {
 
+  // Validate request isnt empty
+  if (!req.body.username) {
+    res.status(400).send({ message: "Content can not be empty!" });
+    return;
+  }
+
+  await userModel.findOneAndUpdate({ username: req.session.username }, { $set: { password: req.body.username } }, { new: true })
+
+  res.send({ username: req.body.username })
+
+  req.session.username = req.body.username
+};
+
+
+// change password
+exports.changePassword = async (req, res) => {
+
+  // Validate request isnt empty
+  if (!req.body.username) {
+    res.status(400).send({ message: "Content can not be empty!" });
+    return;
+  }
+  //search db by username, when found, set password as new password
+  await userModel.findOneAndUpdate({ username: req.body.username }, { $set: { username: req.body.password } }, { new: true })
+
+  res.send("password set!")
+
+
+
+};

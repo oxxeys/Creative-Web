@@ -26,8 +26,12 @@ class boxyUserAuthService {
     return http.get("/authenticate/boxy/fetchUserInfo");
   }
 
-  changeUsername() {
-    return http.get("/authenticate/boxy/changeUsername");
+  changeUsername(data) {
+    return http.post("/authenticate/boxy/changeUsername", data);
+  }
+
+  changePassword(data) {
+    return http.post("/authenticate/boxy/changePassword", data);
   }
 }
 

@@ -16,7 +16,22 @@
         </div>
 
         <div v-else>
-            <h4>You logged in successfully!</h4>
+            <h4>Changed username successfully</h4>
+            <button class="btn btn-success" @click="newUser">Add</button>
+        </div>
+
+        <div v-if="!submitted">
+            <div class="form-group">
+                <!-- set label for form the id correlates to -->
+                <label for="changeUName">Change Password?</label>
+                <input type="text" class="form-control" id="changeUName" required v-model="user.password"
+                    name="changeUName" :placeholder="passUpdateText"/>
+            </div>
+            <button @click="changePassword" class="btn btn-success">Change Password</button>
+        </div>
+
+        <div v-else>
+            <h4>Changed password successfully!</h4>
             <button class="btn btn-success" @click="newUser">Add</button>
         </div>
     </div>
@@ -25,21 +40,18 @@
 <script setup>
 import { onBeforeMount, onMounted, reactive, ref } from "vue";
 import userAuthServices from "../services/userAuthServices.js";
-import { loggedInBool } from "../store/loginCheck.js";
 
 const username1 = ref("Username: ")
+const passUpdateText = ref("Pass: ")
 
 onMounted(async () => {
-// get username
+    // get username
     //make a call to the back end
     const res = await userAuthServices.fetchUserInfo()
-// show username 
-console.log(res)
-username1.value = res.data.username
-
-// allow user to change thier username or password through a form 
+    // show username 
+    console.log(res)
+    username1.value = res.data.username
 })
-
 
 // reactive tutorial object
 const user = reactive({
@@ -49,23 +61,15 @@ const user = reactive({
 // submitted flag
 const submitted = ref(false);
 
-
 // reset form for new user
 const newUser = () => {
     submitted.value = false
-    user._id = null
     user.username = ""
     user.password = ""
-    user.email = ""
+
 };
 
-// login code
-
-// import router so we can push user about
-import { useRouter } from "vue-router"
-const router = useRouter()
-
-// Change User
+// allow user to change thier username or password through a form 
 const changeUser = async () => {
     const data = { // data to send in (taken from the form the user fills out)
         username: user.username
@@ -73,12 +77,34 @@ const changeUser = async () => {
 
     try {
         const response = await userAuthServices.changeUsername(data); // call login, sending in username + password which goes to db
+        console.log(response)
 
         // set value if username is in db 
         if (response.data.username) {
-            loggedInBool.value = true
-            submitted.value = true
-            router.push("/")
+            username1.value = response.data.username // set username label to new value
+            user.username = "" // reset field
+            // submitted.value = true
+        }
+    } catch (e) {
+        console.error(e);
+    }
+};
+
+// allow user to change thier username or password through a form 
+const changePassword = async () => {
+    const data = { // data to send in (taken from the form the user fills out)
+        username: username1.value,
+        password: user.password
+    };
+
+    try {
+        const response = await userAuthServices.changePassword(data); // call login, sending in username + password which goes to db
+        console.log(response)
+
+        // set value if username is in db 
+        if (response) {
+            user.password = "" // reset field
+            passUpdateText.value = "Password Changed!"
         }
     } catch (e) {
         console.error(e);
