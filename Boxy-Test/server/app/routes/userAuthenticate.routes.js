@@ -4,12 +4,22 @@ module.exports = app => {
 
   var router = require("express").Router();
 
+  //post requests -----
 
   // Create a new user
   router.post("/createUser", authenticate.createUser);
 
   // login user
   router.post("/Login", authenticate.Login);
+
+  //change username
+  router.post("/changeUsername", authenticate.changeUsername);
+
+  //change pass
+  router.post("/changePassword", authenticate.changePassword);
+
+
+  //get requests -----
 
   // when called, if session exists, send back username otherwise null
   router.get("/checkSession", (req, res) => {
@@ -27,13 +37,6 @@ module.exports = app => {
       username: req.session.username || null
     });
   });
-
-  //change username
-  router.post("/changeUsername", authenticate.changeUsername);
-
-  //change pass
-  router.post("/changePassword", authenticate.changePassword);
-
 
   // change the route of /create user to be /authenticate/boxy/createUser 
   app.use('/api/authenticate/boxy', router);

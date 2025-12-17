@@ -6,7 +6,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 // import the routes we use 
 import PostList from '../components/PostList.vue';
 import Post from '../components/Post.vue';
-import AddPost from '../components/AddPost.vue';
+import QRCreatePost from '../components/QRCreatePost.vue';
 import Register from '../components/Register.vue';
 import Login from '../components/Login.vue';
 import home from "../components/home.vue";
@@ -41,21 +41,28 @@ const routes = [
     meta: { requiresAuth: true }
   },
   {
-    path: '/postAdd',
-    name: 'add',
-    component: AddPost,
+    path: '/QRCreatePost',
+    name: 'QRCreatePost',
+    component: QRCreatePost,
     meta: { requiresAuth: true }
   },
-    {
+  // {
+  //   path: '/postAdd',
+  //   name: 'add',
+  //   component: AddPost,
+  //   meta: { requiresAuth: true }
+  // },
+  {
     path: '/createUser',
     name: 'createUser',
     component: Register,
   },
-      {
+  {
     path: '/Login',
     name: 'Login',
     component: Login,
   },
+
 ];
 
 const router = createRouter({

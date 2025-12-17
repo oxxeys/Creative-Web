@@ -11,6 +11,7 @@
         </li> -->
 
         <!-- ADD ONLY ROUTED TO IF ON MOBILE && IF CAME FROM QR CODE -->
+
         <!-- <li v-if="loggedIn" class="nav-item">
           <router-link to="/postAdd" class="nav-link">Add</router-link>
         </li> -->
@@ -26,7 +27,7 @@
           <router-link to="/createUser" class="nav-link">Register</router-link>
         </li>
         <li v-if="!loggedIn" class="nav-item">
-          <router-link to="/Login" class="nav-link">Login</router-link>
+          <router-link to="/Login?qr=true" class="nav-link">Login</router-link>
         </li>
         <!-- show when logged in - this could be a button instead! -->
 

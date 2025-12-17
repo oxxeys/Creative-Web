@@ -30,6 +30,19 @@ import { reactive, ref } from "vue";
 import userAuthServices from "../services/userAuthServices.js";
 import { loggedInBool } from "../store/loginCheck.js";
 
+const urlParams = new URLSearchParams(window.location.search);
+const myParam = urlParams.get('qr');
+let fromQRCode
+console.log(myParam)
+if (myParam){
+    fromQRCode = true
+    console.log(myParam)
+}
+else{
+    console.log("not detected to be from qr code!")
+}
+
+
 // reactive tutorial object
 const user = reactive({
     _id: null,
@@ -71,12 +84,20 @@ const loginUser = async () => {
         if (response.data.username) {
             loggedInBool.value = true
             submitted.value = true
-            router.push("/")
+            if (fromQRCode){
+                router.push("/QRCreatePost")
+            }
+            else{
+               router.push("/") 
+            }
+            
         }
     } catch (e) {
         console.error(e);
     }
 };
+
+
 </script>
 
 <style>

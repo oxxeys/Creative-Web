@@ -10,7 +10,7 @@
                 <!-- set label for form the id correlates to -->
                 <label for="changeUName">Change Username?</label>
                 <input type="text" class="form-control" id="changeUName" required v-model="user.username"
-                    name="changeUName" />
+                    name="changeUName" :placeholder="userUpdateText"/>
             </div>
             <button @click="changeUser" class="btn btn-success">Change Username</button>
         </div>
@@ -42,7 +42,8 @@ import { onBeforeMount, onMounted, reactive, ref } from "vue";
 import userAuthServices from "../services/userAuthServices.js";
 
 const username1 = ref("Username: ")
-const passUpdateText = ref("Pass: ")
+const userUpdateText = ref("New Username: ")
+const passUpdateText = ref("New Password: ")
 
 onMounted(async () => {
     // get username
@@ -83,6 +84,7 @@ const changeUser = async () => {
         if (response.data.username) {
             username1.value = response.data.username // set username label to new value
             user.username = "" // reset field
+            userUpdateText.value = "Username Changed!"
             // submitted.value = true
         }
     } catch (e) {

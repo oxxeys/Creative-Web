@@ -33,6 +33,7 @@ class boxyUserAuthService {
   changePassword(data) {
     return http.post("/authenticate/boxy/changePassword", data);
   }
+
 }
 
 export default new boxyUserAuthService();
