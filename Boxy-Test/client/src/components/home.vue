@@ -9,9 +9,17 @@
       <h4>Boxy</h4>
     </div>
 
-    <div class="col-md-12 min-vh-100 p-3">
+    <div class="col-md-12 min-vh-100 p-3 d-flex flex-column">
       <h4>MAPBOX HERE</h4>
+      <div id="sidebar">
+        Longitude: {{ location.center.lng.toFixed(4) }} | 
+        Latitude:{{ location.center.lat.toFixed(4) }} | 
+        Zoom:{{ location.zoom.toFixed(2) }} |
+      </div>
+      <Map v-model="location" class="flex-grow-1" />
     </div>
+
+
     <div class="col-md-12 min-vh-100">
       <div class="col-md-6 p-3">
         <h4>Boxy</h4>
@@ -58,6 +66,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import PostDataServices from "../services/PostDataServices.js";
+import Map from "./Map.vue";
 
 // state variables
 const tutorials = ref([]);
@@ -113,6 +122,13 @@ const searchTitle = async () => {
 
 // fetch tutorials when component mounts
 onMounted(retrieveTutorials);
+
+const location = ref({
+  center: { lng: -2.3877, lat: 51.3794 },
+  zoom: 12,
+})
+
+
 </script>
 
 <style>

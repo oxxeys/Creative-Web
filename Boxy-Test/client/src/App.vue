@@ -41,7 +41,6 @@
 </template>
 
 <script>
-
 import boxyUserAuthService from "./services/userAuthServices";
 import { loggedInBool } from "./store/loginCheck.js";
 
