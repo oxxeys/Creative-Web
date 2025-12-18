@@ -10,7 +10,19 @@
         <label for="description">Description</label>
         <input class="form-control" id="description" required v-model="tutorial.description" name="description" />
       </div>
+      <div v-if="geolocationFlag && currentGeolocation">
+        <div class="form-group" >
+          <label for="description">lat: {{ currentGeolocation.coords.latitude  }}, long: {{ currentGeolocation.coords.longitude  }}</label>
+        </div>
+      </div>
+      <div v-else>
+        <label for="description">no geolocation found!</label>
+        <input class="form-control" id="description" required v-model="tutorial.location" name="description" />
+        <!-- Would like to expand -->
+        <!-- if user *can't* use geolocation features then allow them to maually enter the location - but only if they can't! -->
+      </div>
 
+      <!-- look into disable button untill geolocationFlag and currentGeolocation are true -->
       <button @click="saveTutorial" class="btn btn-success">Submit</button>
     </div>
 
@@ -22,7 +34,7 @@
 </template>
 
 <script setup>
-import { reactive, ref } from "vue";
+import { onMounted, reactive, ref } from "vue";
 import PostDataServices from "../services/PostDataServices.js";
 
 // reactive tutorial object
@@ -31,18 +43,38 @@ const tutorial = reactive({
   title: "",
   description: "",
   published: false,
+  longitude: "",
+  latitude: "",
 });
 
 // submitted flag
 const submitted = ref(false);
+
+const geolocationFlag = ref(false);
+
+const currentGeolocation = ref(null)
+
+onMounted(() => {
+
+  // done using Geolocation API docs from mozilla (refrenced in document) 
+  if ("geolocation" in navigator){
+    geolocationFlag.value = true // allow geolocation section to be shown 
+    //put current position into a var
+    navigator.geolocation.getCurrentPosition((position) => { 
+      currentGeolocation.value = position // get current position
+    }) 
+    
+  }
+})
 
 // save tutorial method
 const saveTutorial = async () => {
   const data = {
     title: tutorial.title,
     description: tutorial.description,
+    longitude: currentGeolocation.value.coords.longitude,
+    latitude: currentGeolocation.value.coords.latitude
   };
-
   try {
     const response = await PostDataServices.create(data);
     tutorial.id = response.data._id;

@@ -10,7 +10,7 @@
     </div>
 
     <div class="col-md-12 min-vh-100 p-3 d-flex flex-column">
-      <h4>MAPBOX HERE</h4>
+      <h4>Boxys Last Seen Location!</h4>
       <div id="sidebar">
         Longitude: {{ location.center.lng.toFixed(4) }} | 
         Latitude:{{ location.center.lat.toFixed(4) }} | 
@@ -46,8 +46,12 @@
             <label><strong>Description:</strong></label> {{ currentTutorial.description }}
           </div>
           <div>
-            <label><strong>Status:</strong></label>
-            {{ currentTutorial.published ? "Published" : "Pending" }}
+            <label><strong>Latitude:</strong></label>
+            {{ currentTutorial.latitude}}
+          </div>
+          <div>
+            <label><strong>Longitude:</strong></label>
+            {{ currentTutorial.longitude}}
           </div>
 
           <router-link class="badge badge-warning" :to="'/post/' + currentTutorial._id">

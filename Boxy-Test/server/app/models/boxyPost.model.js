@@ -7,7 +7,9 @@ module.exports = mongoose => {
       {
         title: String,
         description: String,
-        published: Boolean
+        published: Boolean,
+        longitude: [Number],
+        latitude: [Number],
       },
       //ADD GELOCATION CALL HERE
       { timestamps: true } // gives timestamps for when created without having to use date()

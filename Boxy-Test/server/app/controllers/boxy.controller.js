@@ -11,12 +11,13 @@ exports.create = (req, res) => {
     res.status(400).send({ message: "Content can not be empty!" });
     return;
   }
-
+  console.log(req.body)
   // Create a Tutorial
   const tutorial = new Tutorial({
     title: req.body.title,
     description: req.body.description,
-    published: req.body.published ? req.body.published : false
+    latitude: req.body.latitude,
+    longitude: req.body.longitude
   });
 
   // Save Tutorial in the database

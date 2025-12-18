@@ -45,9 +45,15 @@ onMounted(() => {
         zoom
     })
 
+    //call to db 
+
+    //ask for all posts langitude + longitude markers - return as array
+
+    //loop through the length of array, returning a new marker for each post entry 
+
     // Create a new marker.
     const marker = new mapboxgl.Marker()
-        .setLngLat([-2.3877,51.3794])
+        .setLngLat([-2.3877,51.3794]) 
         .addTo(map);
 
     map.on("move", updateLocation);
@@ -61,24 +67,6 @@ onBeforeUnmount(() => {
     map = null
 
 })
-
-// export default {
-//   mounted() {
-//     const map = new mapboxgl.Map({
-//       container: this.$refs.mapContainer,
-//       style: "mapbox://styles/mapbox/standard",
-//     });
-
-//     // assign the map instance to this component's map property
-//     this.map = map;
-//   },
-
-//   // clean up the map instance when the component is unmounted
-//   unmounted() {
-//     this.map.remove();
-//     this.map = null;
-//   }
-// };
 </script>
 
 <style>
