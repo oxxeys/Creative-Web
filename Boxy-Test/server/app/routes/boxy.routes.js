@@ -9,6 +9,10 @@ module.exports = app => {
   // Create a new Tutorial
   router.post("/", callDB.create);
 
+
+  // Retrieve most recent post
+  router.get("/mostRecentPost", callDB.mostRecentPost);
+
   // Retrieve all Tutorials
   router.get("/", callDB.findAll);
 

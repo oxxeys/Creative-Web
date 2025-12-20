@@ -1,7 +1,6 @@
 // get db obj, then parse tutorial obj from it
 const db = require("../models");
 const Tutorial = db.tutorials;
-
 // Create and Save a new Tutorial
 exports.create = (req, res) => {
 
@@ -50,6 +49,24 @@ exports.findAll = (req, res) => {
       });
     });
 };
+
+
+// Find a most recent post long+lat
+exports.mostRecentPost = (req, res) => {
+  Tutorial.findOne({})
+    .sort({createdAt: -1})
+    .then(data => {
+      if (!data)
+        res.status(404).send({ message: "No posts to find?! Go make a post!"});
+      else res.send(data);
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .send({ message: "Error retrieving post!"});
+    });
+};
+
 
 // Find a single Tutorial with an id
 exports.findOne = (req, res) => {

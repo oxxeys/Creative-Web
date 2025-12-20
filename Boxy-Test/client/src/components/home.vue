@@ -77,13 +77,15 @@ const tutorials = ref([]);
 const currentTutorial = ref(null);
 const currentIndex = ref(-1);
 const title = ref("");
+const singlePostLocation = []
+
 
 // fetch all tutorials
 const retrieveTutorials = async () => {
   try {
     const response = await PostDataServices.getAll();
     tutorials.value = response.data;
-    console.log(response.data);
+    // console.log(response.data);
   } catch (e) {
     console.error(e);
   }
@@ -106,7 +108,7 @@ const setActiveTutorial = (tutorial, index) => {
 const removeAllTutorials = async () => {
   try {
     const response = await PostDataServices.deleteAll();
-    console.log(response.data);
+    // console.log(response.data);
     refreshList();
   } catch (e) {
     console.error(e);
@@ -127,8 +129,23 @@ const searchTitle = async () => {
 // fetch tutorials when component mounts
 onMounted(retrieveTutorials);
 
+onMounted(async() => {
+  // fetch most recent posts
+    try {
+        const res = await PostDataServices.mostRecentPost()
+        
+        let long = res.data.longitude[0]
+        let lat = res.data.latitude[0]
+        location.value.center = {lng: long, lat: lat}
+
+    } catch (e) {
+        console.error(e)
+    }
+
+})
+  
 const location = ref({
-  center: { lng: -2.3877, lat: 51.3794 },
+  center: { lng: -5.3877, lat: 51.3794 },
   zoom: 12,
 })
 

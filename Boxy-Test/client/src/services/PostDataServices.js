@@ -5,6 +5,10 @@ class boxyDataService {
     return http.get("/boxy");
   }
 
+  mostRecentPost() {
+    return http.get("/boxy/mostRecentPost");
+  }
+
   get(id) {
     return http.get(`/boxy/${id}`);
   }
