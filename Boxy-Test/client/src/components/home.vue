@@ -131,22 +131,26 @@ onMounted(retrieveTutorials);
 
 onMounted(async() => {
   // fetch most recent posts
-    try {
-        const res = await PostDataServices.mostRecentPost()
+    // try {
+    //     const res = await PostDataServices.mostRecentPost()
         
-        let long = res.data.longitude[0]
-        let lat = res.data.latitude[0]
-        location.value.center = {lng: long, lat: lat}
+    //     let long = res.data.longitude[0]
+    //     let lat = res.data.latitude[0]
+    //     location.value.center = {lng: long, lat: lat}
+    //     map.flyTo({
+    //       center: {lng: long, lat: lat},
+    //       essential: true
+    //     })
 
-    } catch (e) {
-        console.error(e)
-    }
+    // } catch (e) {
+    //     console.error(e)
+    // }
 
 })
   
 const location = ref({
   center: { lng: -5.3877, lat: 51.3794 },
-  zoom: 12,
+  zoom: 0,
 })
 
 

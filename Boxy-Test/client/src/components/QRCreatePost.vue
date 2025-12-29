@@ -10,6 +10,12 @@
         <label for="description">Description</label>
         <input class="form-control" id="description" required v-model="tutorial.description" name="description" />
       </div>
+
+      <div class="form-group">
+        <label for="addPic">Add a Picture!</label>
+        <input class="form-control" id="addPic" type="file" accept="image/*" required v-on:change="tutorial.picture" name="addPic" />
+      </div>
+
       <div v-if="geolocationFlag && currentGeolocation">
         <div class="form-group" >
           <label for="description">lat: {{ currentGeolocation.coords.latitude  }}, long: {{ currentGeolocation.coords.longitude  }}</label>
@@ -28,7 +34,7 @@
 
     <div v-else>
       <h4>You submitted successfully!</h4>
-      <button class="btn btn-success" @click="newTutorial">Add</button>
+      <button class="btn btn-success" @click="newTutorial">Enter the App</button>
     </div>
   </div>
 </template>
@@ -36,6 +42,10 @@
 <script setup>
 import { onMounted, reactive, ref } from "vue";
 import PostDataServices from "../services/PostDataServices.js";
+import { useRouter } from "vue-router"
+
+//router to push user around
+const router = useRouter()
 
 // reactive tutorial object
 const tutorial = reactive({
@@ -45,6 +55,7 @@ const tutorial = reactive({
   published: false,
   longitude: "",
   latitude: "",
+  picture: "",
 });
 
 // submitted flag
@@ -92,6 +103,8 @@ const newTutorial = () => {
   tutorial.title = "";
   tutorial.description = "";
   tutorial.published = false;
+
+  router.push("/") 
 };
 </script>
 

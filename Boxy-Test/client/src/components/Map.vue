@@ -63,9 +63,9 @@ onMounted(async () => {
 
     //ask for all posts langitude + longitude markers - return as array
     //loop through the length of array, returning a new marker for each post entry 
-    map.on("load", () => {
+    map.on("load", async () => {
         for (var i = 0; i < coordsFromDB.length; i++) {
-            
+
             //can't pass straight in due to being an array already and mapbox doesnt seem to like that
             const long = coordsFromDB[i].longitude
             const lat = coordsFromDB[i].latitude
@@ -107,7 +107,20 @@ onMounted(async () => {
             }
         })
 
+        try {
+            const res = await PostDataServices.mostRecentPost()
 
+            let long = res.data.longitude[0]
+            let lat = res.data.latitude[0]
+            map.flyTo({
+                center: { lng: long, lat: lat },
+                essential: true,
+                zoom: 12
+            })
+
+        } catch (e) {
+            console.error(e)
+        }
 
         map.on("move", updateLocation);
         map.on("zoom", updateLocation);
