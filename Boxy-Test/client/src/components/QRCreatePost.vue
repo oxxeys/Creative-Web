@@ -11,10 +11,10 @@
         <input class="form-control" id="description" required v-model="tutorial.description" name="description" />
       </div>
 
-      <div class="form-group">
+      <!-- <div class="form-group">
         <label for="addPic">Add a Picture!</label>
         <input class="form-control" id="addPic" type="file" accept="image/*" required v-on:change="tutorial.picture" name="addPic" />
-      </div>
+      </div> -->
 
       <div v-if="geolocationFlag && currentGeolocation">
         <div class="form-group" >
@@ -55,7 +55,7 @@ const tutorial = reactive({
   published: false,
   longitude: "",
   latitude: "",
-  picture: "",
+  picture: null,
 });
 
 // submitted flag
@@ -80,11 +80,12 @@ onMounted(() => {
 
 // save tutorial method
 const saveTutorial = async () => {
-  const data = {
+  let data = {
     title: tutorial.title,
     description: tutorial.description,
     longitude: currentGeolocation.value.coords.longitude,
-    latitude: currentGeolocation.value.coords.latitude
+    latitude: currentGeolocation.value.coords.latitude,
+    // picture: tutorial.addPic
   };
   try {
     const response = await PostDataServices.create(data);

@@ -16,7 +16,7 @@ exports.create = (req, res) => {
     title: req.body.title,
     description: req.body.description,
     latitude: req.body.latitude,
-    longitude: req.body.longitude
+    longitude: req.body.longitude,
   });
 
   // Save Tutorial in the database

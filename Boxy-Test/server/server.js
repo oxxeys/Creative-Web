@@ -20,6 +20,11 @@ app.use(sessions({
     saveUninitialized: false
 }))
 
+
+// const multer=require("multer")
+// const upload = multer({dest: "./app/uploads"})
+
+
 // get db object from /models (defaults to index.js)
 const db = require("./app/models");
 
