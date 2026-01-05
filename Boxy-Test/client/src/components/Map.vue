@@ -13,6 +13,7 @@ import { ref, onMounted, onBeforeUnmount, onBeforeMount } from "vue";
 import PostDataServices from "../services/PostDataServices.js";
 import { RouterLink } from "vue-router";
 
+
 const props = defineProps({
     modelValue: {
         type: Object,
@@ -20,7 +21,8 @@ const props = defineProps({
     }
 });
 
-mapboxgl.accessToken = "pk.eyJ1Ijoib3h4ZXlzIiwiYSI6ImNtamE0eGI2NjAweG8zZXNicmR3ejhza3AifQ.dhKshKBW7T4z7N5O8vBHsA";
+//mapbox api key call
+mapboxgl.accessToken = import.meta.env.VITE_mapboxKey;
 
 const mapContainer = ref(null)
 let map = null
@@ -45,7 +47,7 @@ onMounted(async () => {
     map = new mapboxgl.Map({
 
         container: mapContainer.value,
-        style: "mapbox://styles/mapbox/standard",
+        style: "mapbox://styles/oxxeys/cmju1vkh7000a01sa6mab7uou",
         center: [center.lng, center.lat],
         zoom
     })
@@ -75,10 +77,8 @@ onMounted(async () => {
             // Create a new marker inside of the loop
             const marker = new mapboxgl.Marker()
                 .setLngLat([coordsFromDB[i].longitude, coordsFromDB[i].latitude])
+                .setPopup(new mapboxgl.Popup().setHTML("<h3>" + coordsFromDB[i].title + "</h3>" + "<p>" + coordsFromDB[i].description + "</p>"))
                 .addTo(map);
-
-
-
             markers.push(marker)
         }
         // https://docs.mapbox.com/mapbox-gl-js/example/geojson-line/

@@ -1,7 +1,7 @@
 <!-- this is the root folder of the projecrt -->
 
-<template>
-  <div id="App">
+<template  >
+  <div id="App" data-bs-theme="mainTheme">
     <!-- nav bar set here -->
     <nav class="navbar navbar-expand navbar-dark bg-dark d-flex justify-content-center">
       <router-link to="/" class="navbar-brand">Boxy!</router-link>

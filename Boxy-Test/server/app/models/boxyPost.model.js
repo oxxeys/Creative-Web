@@ -11,7 +11,6 @@ module.exports = mongoose => {
         longitude: [Number],
         latitude: [Number],
       },
-      //ADD GELOCATION CALL HERE
       { timestamps: true } // gives timestamps for when created without having to use date()
     )
   );
