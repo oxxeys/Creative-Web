@@ -10,6 +10,7 @@ module.exports = mongoose => {
         published: Boolean,
         longitude: [Number],
         latitude: [Number],
+        username: String,
       },
       { timestamps: true } // gives timestamps for when created without having to use date()
     )

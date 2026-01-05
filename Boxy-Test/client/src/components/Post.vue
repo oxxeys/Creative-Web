@@ -11,6 +11,7 @@
           v-model="currentTutorial.title"
         />
       </div>
+      
       <div class="form-group">
         <label for="description">Description</label>
         <input
@@ -26,6 +27,8 @@
         {{ currentTutorial.published ? "Published" : "Pending" }}
       </div>
     </form>
+
+
 
     <button
       class="badge badge-primary mr-2"
@@ -71,6 +74,7 @@ const router = useRouter();
 const currentTutorial = ref(null);
 const message = ref("");
 
+
 // fetch tutorial by id
 const getTutorial = async (id) => {
   try {
@@ -91,6 +95,7 @@ const updatePublished = async (status) => {
     title: currentTutorial.value.title,
     description: currentTutorial.value.description,
     published: status,
+
   };
 
   try {

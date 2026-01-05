@@ -1,6 +1,7 @@
 <template>
   <div class="submit-form">
-    <div v-if="!submitted">
+    <div v-if="!submitted">  
+      <p> {{ currentUsername }}</p>
       <div class="form-group">
         <label for="title">Title</label>
         <input type="text" class="form-control" id="title" required v-model="tutorial.title" name="title" />
@@ -37,12 +38,16 @@
       <button class="btn btn-success" @click="newTutorial">Enter the App</button>
     </div>
   </div>
+
 </template>
 
 <script setup>
 import { onMounted, reactive, ref } from "vue";
 import PostDataServices from "../services/PostDataServices.js";
+import userAuthServices from "../services/userAuthServices.js";
 import { useRouter } from "vue-router"
+
+const currentUsername = ref(" ")
 
 //router to push user around
 const router = useRouter()
@@ -56,6 +61,7 @@ const tutorial = reactive({
   longitude: "",
   latitude: "",
   picture: null,
+  username: "",
 });
 
 // submitted flag
@@ -65,7 +71,11 @@ const geolocationFlag = ref(false);
 
 const currentGeolocation = ref(null)
 
-onMounted(() => {
+onMounted(async() => {
+
+    // get username
+    const res = await userAuthServices.fetchUserInfo()
+    currentUsername.value = res.data.username
 
   // done using Geolocation API docs from mozilla (refrenced in document) 
   if ("geolocation" in navigator){
@@ -85,6 +95,7 @@ const saveTutorial = async () => {
     description: tutorial.description,
     longitude: currentGeolocation.value.coords.longitude,
     latitude: currentGeolocation.value.coords.latitude,
+    username: currentUsername.value
     // picture: tutorial.addPic
   };
   try {

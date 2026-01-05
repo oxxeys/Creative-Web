@@ -11,15 +11,16 @@ exports.create = (req, res) => {
     return;
   }
   console.log(req.body)
-  // Create a Tutorial
+  // Create a Post
   const tutorial = new Tutorial({
     title: req.body.title,
     description: req.body.description,
     latitude: req.body.latitude,
     longitude: req.body.longitude,
+    username: req.body.username,
   });
 
-  // Save Tutorial in the database
+  // Save Post in the database
   tutorial
     .save(tutorial)
     .then(data => {

@@ -92,6 +92,10 @@
             <label><strong>Longitude:</strong></label>
             {{ currentTutorial.longitude }}
           </div>
+          <div>
+            <label><strong>Poster:</strong></label>
+            {{ currentTutorial.username }}
+          </div>
 
           <router-link class="badge badge-warning" :to="'/post/' + currentTutorial._id">
             Edit
