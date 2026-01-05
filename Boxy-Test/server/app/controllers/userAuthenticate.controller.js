@@ -14,7 +14,8 @@ exports.createUser = (req, res) => {
   const user = new userModel({
     username: req.body.username,
     password: req.body.password,
-    email: req.body.email
+    email: req.body.email,
+    admin: false
   });
 
   // Save user to db

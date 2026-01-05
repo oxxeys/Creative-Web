@@ -31,12 +31,13 @@
             </div>
 
 
-            <button @click="saveUser" class="btn btn-success">Submit</button>
+            <button @click="saveUser" class="btn btn-success ">Submit</button>
         </div>
 
-        <div v-else>
-            <h4>You submitted successfully!</h4>
-            <button class="btn btn-success" @click="newUser">Add</button>
+        <div v-else class="text-center">
+            <h2>Registered!</h2>
+            <p >Please now log in to confirm your a real human and not a box!</p>
+            <button class="btn btn-success" @click="newUser">Login</button>
         </div>
     </div>
 </template>
@@ -44,6 +45,7 @@
 <script setup>
 import { reactive, ref } from "vue";
 import userAuthServices from "../services/userAuthServices.js";
+import { useRouter } from "vue-router"
 
 // reactive tutorial object
 const user = reactive({
@@ -55,6 +57,9 @@ const user = reactive({
 
 // submitted flag
 const submitted = ref(false);
+
+//initialise router
+const router = useRouter()
 
 // save user method
 const saveUser = async () => {
@@ -69,6 +74,7 @@ const saveUser = async () => {
         user.id = response.data._id;
         console.log(response.data);
         submitted.value = true;
+        
     } catch (e) {
         console.error(e);
     }
@@ -81,6 +87,7 @@ const newUser = () => {
     user.username= "";
     user.password= "";
     user.email= "";
+    router.push("/")
 };
 </script>
 

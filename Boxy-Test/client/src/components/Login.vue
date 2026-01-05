@@ -29,6 +29,8 @@
 import { reactive, ref } from "vue";
 import userAuthServices from "../services/userAuthServices.js";
 import { loggedInBool } from "../store/loginCheck.js";
+// import router so we can push user about
+import { useRouter } from "vue-router"
 
 const urlParams = new URLSearchParams(window.location.search);
 const myParam = urlParams.get('qr');
@@ -64,10 +66,7 @@ const newUser = () => {
     user.email = ""
 };
 
-// login code
-
-// import router so we can push user about
-import { useRouter } from "vue-router"
+// initialise router
 const router = useRouter()
 
 // login user
