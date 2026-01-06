@@ -6,9 +6,9 @@
                 v-for="(tutorial, index) in tutorials" :key="tutorial._id" @click="setActiveTutorial(tutorial, index)">
                 <div style="margin-bottom: 200px;" class="box-parentPost"> 
                     <div class="planePost front-plane">
-                        <p class="z-index-4 position-relative fs-3 m-4">{{ tutorial.title }}</p>
-                        <p class="z-index-4 position-relative fs-4">{{ tutorial.description }}</p>
-                        <p class="z-index-4 position-relative fs-5" style="color: #fff;"> {{ tutorial.username }}</p>
+                        <p class="z-index-4 position-relative m-4 title">{{ tutorial.title }}</p>
+                        <p class="z-index-4 position-relative description">{{ tutorial.description }}</p>
+                        <p class="z-index-4 position-relative username" style="color: #fff;"> {{ tutorial.username }}</p>
                     </div>
                     <div class="planePost top-plane"></div>
                     <div class="planePost bottom-plane"></div>
@@ -87,12 +87,24 @@ onMounted(retrieveTutorials);
 <style>
 :root {
   --sizeBox: 200px;
+  --iteration: 1;
 }
 
 .list {
   text-align: left;
   max-width: 750px;
   margin: auto;
+}
+
+.title{
+font-size:x-large;
+}
+.description{
+    font-size: medium;
+}
+.username{
+    text-decoration: underline;
+    color: #fff;
 }
 
 
@@ -106,6 +118,7 @@ onMounted(retrieveTutorials);
   perspective-origin: 50% -100px;
 }
 
+
 .box-parentPost {
   width: var(--sizeBox);
   aspect-ratio: 1;
@@ -113,8 +126,11 @@ onMounted(retrieveTutorials);
   position: relative;
   transform-style: preserve-3d;
   transform-origin: calc(var(--sizeBox)/2) bottom calc(calc(var(--sizeBox)/2)*-1);
-  
+  transform: rotateY(-10deg)
+
 }
+
+
 
 .animate {
   /* tell keyframes what animation we want*/
@@ -130,6 +146,9 @@ onMounted(retrieveTutorials);
 
 .planePost.front-plane {
   background-color: #e99f59;
+  padding: 10px;
+  min-height: 275px;
+  max-height: 275px;
 }
 
 .planePost.bottom-plane {
@@ -160,6 +179,8 @@ onMounted(retrieveTutorials);
   transform-origin: left;
   transform: rotateY(90deg);
   background-color: #f3a761;
+  min-height: 275px;
+  max-height: 275px;
 }
 
 .planePost.left-plane {

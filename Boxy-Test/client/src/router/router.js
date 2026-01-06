@@ -71,7 +71,7 @@ const router = createRouter({
 });
 
 // router guard to check if user is logged in before accessing certain routes
-// this was done with the help of chat gpt 
+// this was done with the help of chat gpt - i had read through the docs but was confused about how 
 router.beforeEach(async (to, from, next) => {
   const res = await userAuth.checkSession();
   if (to.meta.requiresAuth && !res.data.username) {
