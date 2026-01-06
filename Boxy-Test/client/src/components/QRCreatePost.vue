@@ -4,12 +4,12 @@
       <p> {{ currentUsername }}</p>
       <div class="form-group">
         <label for="title">Title</label>
-        <input type="text" class="form-control" id="title" required v-model="tutorial.title" name="title" />
+        <input type="text" class="form-control" id="title" required v-model="tutorial.title" name="title" :maxlength="15" placeholder="Max 15 characters"/>
       </div>
 
       <div class="form-group">
         <label for="description">Description</label>
-        <input class="form-control" id="description" required v-model="tutorial.description" name="description" />
+        <textarea class="form-control" id="description" required v-model="tutorial.description" name="description" :maxlength="70" placeholder="Max 70 characters" rows="4" style="background-color: #e7c88d9a; resize: none;"/>
       </div>
 
       <!-- <div class="form-group">

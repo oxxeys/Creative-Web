@@ -11,12 +11,12 @@
         <h1 class="pb-4">Where's Boxy?</h1>
         <div class="box-parent animate">
           <!-- maunally set width to overwrite styling set for below boxes -->
-          <div style="width: 100px;" class="plane front-plane"></div>
-          <div style="width: 100px;" class="plane back-plane"></div>
-          <div style="width: 100px;" class="plane top-plane"></div>
-          <div style="width: 100px;" class="plane bottom-plane"></div>
-          <div style="width: 100px;" class="plane left-plane"></div>
-          <div style="width: 100px;" class="plane right-plane"></div>
+          <div class="plane front-plane"></div>
+          <div class="plane back-plane"></div>
+          <div class="plane top-plane"></div>
+          <div class="plane bottom-plane"></div>
+          <div class="plane left-plane"></div>
+          <div class="plane right-plane"></div>
         </div>
         <p class="">boxy is an experiment with people</p> <!--  align-self-end -->
       </div>
@@ -37,19 +37,12 @@
     </div>
 
 
-    <div class="col-md-12 min-vh-100">
+    <postComponent />
+
+    <!-- <div class="col-md-12 min-vh-100">
       <h4>Posts</h4>
-      <div class="col-md-6 p-3">
-
-
-        <ul class="list-group">
-          <!-- <li class="list-group-item" :class="{ active: index === currentIndex }" v-for="(tutorial, index) in tutorials"
-            :key="tutorial._id" @click="setActiveTutorial(tutorial, index)">
-            {{ tutorial.title }}
-
-          </li> -->
-
-          <div class="camera" :class="{ active: index === currentIndex }" v-for="(tutorial, index) in tutorials"
+      <div class="p-3 row mb-5">
+          <div class="camera col-md-6 d-flex justify-content-center" :class="{ active: index === currentIndex }" v-for="(tutorial, index) in tutorials"
             :key="tutorial._id" @click="setActiveTutorial(tutorial, index)">
             <div style="margin-bottom: 300px;" class="box-parent">
               <div class="plane front-plane">
@@ -65,14 +58,6 @@
               <div class="plane right-plane"></div>
             </div>
           </div>
-        </ul>
-
-
-        <!-- could instead: loop through an array and make like 4 boxes, upon  -->
-
-        <!-- <button class="m-3 btn btn-sm btn-danger" @click="removeAllTutorials">
-        Remove All
-      </button> -->
       </div>
 
       <div class="col-md-6 p-3">
@@ -106,7 +91,7 @@
           <p>Please click on a Tutorial...</p>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -114,6 +99,7 @@
 import { ref, onMounted } from "vue";
 import PostDataServices from "../services/PostDataServices.js";
 import Map from "./Map.vue";
+import postComponent from "./PostComponent.vue"
 
 // state variables
 const tutorials = ref([]);
@@ -198,9 +184,7 @@ const location = ref({
 </script>
 
 <style>
-:root {
-  --size: 100px;
-}
+ 
 
 .list {
   text-align: left;
@@ -217,6 +201,7 @@ const location = ref({
 }
 
 .box-parent {
+   --size: 100px;
   width: var(--size);
   aspect-ratio: 1;
 

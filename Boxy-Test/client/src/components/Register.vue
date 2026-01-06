@@ -4,7 +4,7 @@
             <div class="form-group">
                 <label for="title">Username</label>
                 <input type="text" class="form-control" id="username" required v-model="user.username"
-                    name="username" />
+                    name="username" :maxlength="15" placeholder="Max 15 characters"/>
             </div>
 
             <!-- 
