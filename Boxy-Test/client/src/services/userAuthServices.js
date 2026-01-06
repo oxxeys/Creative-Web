@@ -15,7 +15,7 @@ class boxyUserAuthService {
   }
 
   logout() {
-    return http.get("/authenticate/boxy/logout");
+    return http.post("/authenticate/boxy/logout");
   }
 
   checkSession() {

@@ -29,7 +29,7 @@ module.exports = app => {
   });
 
   // logout user 
-  router.get("/logout", authenticate.logOut)
+  router.post("/logout", authenticate.logOut)
 
   //get username of user from session + return it to front end
   router.get("/fetchUserInfo", (req, res) => {

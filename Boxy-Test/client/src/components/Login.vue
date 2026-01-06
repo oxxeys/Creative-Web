@@ -32,6 +32,7 @@ import { loggedInBool } from "../store/loginCheck.js";
 // import router so we can push user about
 import { useRouter } from "vue-router"
 
+//code to check if the user is from the qr code - using url search paramerters 
 const urlParams = new URLSearchParams(window.location.search);
 const myParam = urlParams.get('qr');
 let fromQRCode
