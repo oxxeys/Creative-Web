@@ -1,0 +1,39 @@
+// Calls to backend are written here
+
+import http from "../http-common";
+
+
+
+class boxyUserAuthService {
+
+  create(data) {
+    return http.post("/authenticate/boxy/createUser", data);
+  }
+
+  Login(data) {
+    return http.post("/authenticate/boxy/Login", data);
+  }
+
+  logout() {
+    return http.post("/authenticate/boxy/logout");
+  }
+
+  checkSession() {
+    return http.get("/authenticate/boxy/checkSession");
+  }
+
+  fetchUserInfo() {
+    return http.get("/authenticate/boxy/fetchUserInfo");
+  }
+
+  changeUsername(data) {
+    return http.post("/authenticate/boxy/changeUsername", data);
+  }
+
+  changePassword(data) {
+    return http.post("/authenticate/boxy/changePassword", data);
+  }
+
+}
+
+export default new boxyUserAuthService();
