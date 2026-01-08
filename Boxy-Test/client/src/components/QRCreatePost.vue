@@ -1,7 +1,6 @@
 <template>
   <div class="submit-form">
     <div v-if="!submitted">  
-      <p> {{ currentUsername }}</p>
       <div class="form-group">
         <label for="title">Title</label>
         <input type="text" class="form-control" id="title" required v-model="tutorial.title" name="title" :maxlength="15" placeholder="Max 15 characters"/>

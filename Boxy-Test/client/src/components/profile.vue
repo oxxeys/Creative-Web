@@ -53,7 +53,7 @@
 import { onBeforeMount, onMounted, reactive, ref } from "vue";
 import userAuthServices from "../services/userAuthServices.js";
 
-const username1 = ref("Username: ")
+const username1 = ref("")
 const userUpdateText = ref("New Username: ")
 const passUpdateText = ref("New Password: ")
 
