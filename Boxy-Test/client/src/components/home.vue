@@ -57,6 +57,7 @@ const title = ref("");
 
 
 // fetch all post
+// need to fetch posts here as it is the home page where map and posts are shown so data needs to be here
 const retrievePosts = async () => {
   try {
     const response = await PostDataServices.getAll();
@@ -67,62 +68,14 @@ const retrievePosts = async () => {
   }
 };
 
-// refresh list
-const refreshList = () => {
-  retrievePosts();
-  currentPost.value = null;
-  currentIndex.value = -1;
-};
 
-// set active post
-const setActivePost = (post, index) => {
-  currentPost.value = post;
-  currentIndex.value = index;
-};
 
-// delete all post
-const removeAllPosts = async () => {
-  try {
-    const response = await PostDataServices.deleteAll();
-    // console.log(response.data);
-    refreshList();
-  } catch (e) {
-    console.error(e);
-  }
-};
 
-// search post by title
-const searchTitle = async () => {
-  try {
-    const response = await PostDataServices.findByTitle(title.value);
-    post.value = response.data;
-    console.log(response.data);
-  } catch (e) {
-    console.error(e);
-  }
-};
 
 // fetch post when component mounts
 onMounted(retrievePosts);
 
-onMounted(async () => {
-  // fetch most recent posts
-  // try {
-  //     const res = await PostDataServices.mostRecentPost()
 
-  //     let long = res.data.longitude[0]
-  //     let lat = res.data.latitude[0]
-  //     location.value.center = {lng: long, lat: lat}
-  //     map.flyTo({
-  //       center: {lng: long, lat: lat},
-  //       essential: true
-  //     })
-
-  // } catch (e) {
-  //     console.error(e)
-  // }
-
-})
 
 const location = ref({
   center: { lng: -5.3877, lat: 51.3794 },

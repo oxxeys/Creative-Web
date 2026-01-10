@@ -1,12 +1,13 @@
 <template>
-    <div class="submit-form  d-flex  align-items-center justify-content-between flex-space-right  max-vh-100" style="min-height: 70vh; gap:6rem;"> <!---->
+    <div class="submit-form d-flex align-items-center justify-content-between flex-space-right max-vh-100 text-center"
+        style="min-height: 70vh; gap:6rem;">
 
-        <div v-if="!submitted" class="camera  d-flex flex-column" style="padding-bottom: 10vh;">
+        <div v-if="!submitted" class="camera d-flex flex-column " style="padding-bottom: 10vh;">
             <div class="background ">
                 <div class="face front ">
                     <div class="form-group m-1">
                         <p class="mb-1 text-center">Current Username</p>
-                        <p class="mb-1 text-center">{{ username1 }}</p>
+                        <p class="mb-1 text-center fw-bold">{{ username1 }}</p>
                         <!-- set label for form the id correlates to -->
                         <label for="changeUName">Change Username?</label>
                         <input type="text" class="form-control" id="changeUName" required v-model="user.username"
@@ -26,16 +27,16 @@
             <button class="btn btn-success" @click="newUser">Add</button>
         </div>
 
-        <div v-if="!submitted" class="camera cameraRight p-3 d-flex flex-column" >
-            <div class="background rotate">
-                <div class="face front">
-                    <div class="form-group">
+        <div v-if="!submitted" class="camera cameraRight p-3">
+            <div class="background rotate ">
+                <div class="face front d-flex flex-column justify-content-evenly p-1">
+                    <div class="form-group ">
                         <!-- set label for form the id correlates to -->
                         <label for="changeUName">Change Password?</label>
                         <input type="text" class="form-control" id="changeUName" required v-model="user.password"
                             name="changeUName" :placeholder="passUpdateText" />
                     </div>
-                    <button @click="changePassword" class="btn btn-success" style="margin-bottom: 30vh;">Change Password</button>
+                    <button @click="changePassword" class="btn btn-success">Change Password</button>
                 </div>
                 <div class="face top"></div>
                 <div class="face right"></div>
@@ -60,7 +61,7 @@ const passUpdateText = ref("New Password: ")
 onMounted(async () => {
     // get username
     //make a call to the back end
-    const res = await userAuthServices.fetchUserInfo() 
+    const res = await userAuthServices.fetchUserInfo()
     username1.value = res.data.username
 })
 
@@ -143,7 +144,7 @@ const changePassword = async () => {
     perspective-origin: 50% -200px;
 }
 
-.cameraRight{
+.cameraRight {
     perspective: 1250px;
     perspective-origin: 100% -250px;
 }
@@ -159,7 +160,7 @@ const changePassword = async () => {
 }
 
 
-.rotate{
+.rotate {
     transform: rotateY(-15deg)
 }
 

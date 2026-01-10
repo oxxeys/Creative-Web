@@ -114,7 +114,7 @@ onMounted(async () => {
             map.flyTo({
                 center: { lng: long, lat: lat },
                 essential: true,
-                zoom: 12
+                zoom: 11
             })
 
         } catch (e) {

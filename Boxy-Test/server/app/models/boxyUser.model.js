@@ -1,4 +1,4 @@
-//set up tutorial schema
+//set up user schema
 
 module.exports = mongoose => {
   const UserModel = mongoose.model(
