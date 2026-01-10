@@ -4,8 +4,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
 // import the routes we use 
-import PostList from '../components/PostList.vue';
-import Post from '../components/Post.vue';
 import QRCreatePost from '../components/QRCreatePost.vue';
 import Register from '../components/Register.vue';
 import Login from '../components/Login.vue';
@@ -26,18 +24,6 @@ const routes = [
     path: '/profile',
     name: 'profile',
     component: profile,
-    meta: { requiresAuth: true }
-  },
-  {
-    path: '/posts',
-    name: 'posts',
-    component: PostList,
-    meta: { requiresAuth: true }
-  },
-  {
-    path: '/post/:id',
-    name: 'post-details',
-    component: Post,
     meta: { requiresAuth: true }
   },
   {

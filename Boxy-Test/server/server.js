@@ -10,12 +10,11 @@ const cookieParser = require("cookie-parser")
 
 const app = express();
 
-const threeMiniutes = 3 * 60 * 1000
 const oneHour = 1 * 60 * 60 * 1000
 
 app.use(sessions({
     secret: "SEcRET CODE", // this is typically stroed in the .env file
-    cookie: { maxAge: threeMiniutes },
+    cookie: { maxAge: oneHour },
     resave: false,
     saveUninitialized: false
 }))

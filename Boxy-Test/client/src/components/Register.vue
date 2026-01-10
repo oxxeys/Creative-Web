@@ -47,7 +47,7 @@ import { reactive, ref } from "vue";
 import userAuthServices from "../services/userAuthServices.js";
 import { useRouter } from "vue-router"
 
-// reactive tutorial object
+// reactive user object
 const user = reactive({
     _id: null,
     username: "",

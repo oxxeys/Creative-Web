@@ -9,9 +9,8 @@ https://tomaszs2.medium.com/%EF%B8%8F-vue-options-api-to-composition-api-migrati
 <script setup>
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-import { ref, onMounted, onBeforeUnmount, onBeforeMount } from "vue";
+import { ref, onMounted, onBeforeUnmount } from "vue";
 import PostDataServices from "../services/PostDataServices.js";
-import { RouterLink } from "vue-router";
 
 
 const props = defineProps({

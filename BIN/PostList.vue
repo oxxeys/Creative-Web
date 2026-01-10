@@ -66,7 +66,7 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import PostDataServices from "../services/PostDataServices.js";
+import PostDataServices from "../Boxy-Test/client/src/services/PostDataServices.js";
 
 // state variables
 const tutorials = ref([]);

@@ -39,59 +39,6 @@
 
     <postComponent />
 
-    <!-- <div class="col-md-12 min-vh-100">
-      <h4>Posts</h4>
-      <div class="p-3 row mb-5">
-          <div class="camera col-md-6 d-flex justify-content-center" :class="{ active: index === currentIndex }" v-for="(tutorial, index) in tutorials"
-            :key="tutorial._id" @click="setActiveTutorial(tutorial, index)">
-            <div style="margin-bottom: 300px;" class="box-parent">
-              <div class="plane front-plane">
-                <p class="z-index-4 position-relative">{{ tutorial.title }}</p>
-                <p class="z-index-4 position-relative">{{ tutorial.description }}</p>
-                <p class="z-index-4 position-relative">{{ tutorial.latitude }}</p>
-                <p class="z-index-4 position-relative">{{ tutorial.longitude }}</p>
-              </div>
-              <div class="plane back-plane"></div>
-              <div class="plane top-plane"></div>
-              <div class="plane bottom-plane"></div>
-              <div class="plane left-plane"></div>
-              <div class="plane right-plane"></div>
-            </div>
-          </div>
-      </div>
-
-      <div class="col-md-6 p-3">
-        <div v-if="currentTutorial">
-          <h4>Tutorial</h4>
-          <div>
-            <label><strong>Title:</strong></label> {{ currentTutorial.title }}
-          </div>
-          <div>
-            <label><strong>Description:</strong></label> {{ currentTutorial.description }}
-          </div>
-          <div>
-            <label><strong>Latitude:</strong></label>
-            {{ currentTutorial.latitude }}
-          </div>
-          <div>
-            <label><strong>Longitude:</strong></label>
-            {{ currentTutorial.longitude }}
-          </div>
-          <div>
-            <label><strong>Poster:</strong></label>
-            {{ currentTutorial.username }}
-          </div>
-
-          <router-link class="badge badge-warning" :to="'/post/' + currentTutorial._id">
-            Edit
-          </router-link>
-        </div>
-        <div v-else>
-          <br />
-          <p>Please click on a Tutorial...</p>
-        </div>
-      </div>
-    </div> -->
   </div>
 </template>
 
@@ -102,18 +49,18 @@ import Map from "./Map.vue";
 import postComponent from "./PostComponent.vue"
 
 // state variables
-const tutorials = ref([]);
-const currentTutorial = ref(null);
+const post = ref([]);
+const currentPost = ref(null);
 const currentIndex = ref(-1);
 const title = ref("");
 // const singlePostLocation = []
 
 
-// fetch all tutorials
-const retrieveTutorials = async () => {
+// fetch all post
+const retrievePosts = async () => {
   try {
     const response = await PostDataServices.getAll();
-    tutorials.value = response.data;
+    post.value = response.data;
     // console.log(response.data);
   } catch (e) {
     console.error(e);
@@ -122,19 +69,19 @@ const retrieveTutorials = async () => {
 
 // refresh list
 const refreshList = () => {
-  retrieveTutorials();
-  currentTutorial.value = null;
+  retrievePosts();
+  currentPost.value = null;
   currentIndex.value = -1;
 };
 
-// set active tutorial
-const setActiveTutorial = (tutorial, index) => {
-  currentTutorial.value = tutorial;
+// set active post
+const setActivePost = (post, index) => {
+  currentPost.value = post;
   currentIndex.value = index;
 };
 
-// delete all tutorials
-const removeAllTutorials = async () => {
+// delete all post
+const removeAllPosts = async () => {
   try {
     const response = await PostDataServices.deleteAll();
     // console.log(response.data);
@@ -144,19 +91,19 @@ const removeAllTutorials = async () => {
   }
 };
 
-// search tutorials by title
+// search post by title
 const searchTitle = async () => {
   try {
     const response = await PostDataServices.findByTitle(title.value);
-    tutorials.value = response.data;
+    post.value = response.data;
     console.log(response.data);
   } catch (e) {
     console.error(e);
   }
 };
 
-// fetch tutorials when component mounts
-onMounted(retrieveTutorials);
+// fetch post when component mounts
+onMounted(retrievePosts);
 
 onMounted(async () => {
   // fetch most recent posts

@@ -3,18 +3,13 @@
     <div v-if="!submitted">  
       <div class="form-group">
         <label for="title">Title</label>
-        <input type="text" class="form-control" id="title" required v-model="tutorial.title" name="title" :maxlength="15" placeholder="Max 15 characters"/>
+        <input type="text" class="form-control" id="title" required v-model="post.title" name="title" :maxlength="15" placeholder="Max 15 characters"/>
       </div>
 
       <div class="form-group">
         <label for="description">Description</label>
-        <textarea class="form-control" id="description" required v-model="tutorial.description" name="description" :maxlength="70" placeholder="Max 70 characters" rows="4" style="background-color: #e7c88d9a; resize: none;"/>
+        <textarea class="form-control" id="description" required v-model="post.description" name="description" :maxlength="70" placeholder="Max 70 characters" rows="4" style="background-color: #e7c88d9a; resize: none;"/>
       </div>
-
-      <!-- <div class="form-group">
-        <label for="addPic">Add a Picture!</label>
-        <input class="form-control" id="addPic" type="file" accept="image/*" required v-on:change="tutorial.picture" name="addPic" />
-      </div> -->
 
       <div v-if="geolocationFlag && currentGeolocation">
         <div class="form-group" >
@@ -23,18 +18,18 @@
       </div>
       <div v-else>
         <label for="description">no geolocation found!</label>
-        <input class="form-control" id="description" required v-model="tutorial.location" name="description" />
+        <input class="form-control" id="description" required v-model="post.location" name="description" />
         <!-- Would like to expand -->
         <!-- if user *can't* use geolocation features then allow them to maually enter the location - but only if they can't! -->
       </div>
 
       <!-- look into disable button untill geolocationFlag and currentGeolocation are true -->
-      <button @click="saveTutorial" class="btn btn-success">Submit</button>
+      <button @click="savePost" class="btn btn-success">Submit</button>
     </div>
 
     <div v-else>
       <h4>You submitted successfully!</h4>
-      <button class="btn btn-success" @click="newTutorial">Enter the App</button>
+      <button class="btn btn-success" @click="newPost">Enter the App</button>
     </div>
   </div>
 
@@ -51,8 +46,8 @@ const currentUsername = ref(" ")
 //router to push user around
 const router = useRouter()
 
-// reactive tutorial object
-const tutorial = reactive({
+// reactive post object
+const post = reactive({
   _id: null,
   title: "",
   description: "",
@@ -87,19 +82,19 @@ onMounted(async() => {
   }
 })
 
-// save tutorial method
-const saveTutorial = async () => {
+// save post method
+const savePost = async () => {
   let data = {
-    title: tutorial.title,
-    description: tutorial.description,
+    title: post.title,
+    description: post.description,
     longitude: currentGeolocation.value.coords.longitude,
     latitude: currentGeolocation.value.coords.latitude,
     username: currentUsername.value
-    // picture: tutorial.addPic
+    // picture: post.addPic
   };
   try {
     const response = await PostDataServices.create(data);
-    tutorial.id = response.data._id;
+    post.id = response.data._id;
     console.log(response.data);
     submitted.value = true;
   } catch (e) {
@@ -107,13 +102,13 @@ const saveTutorial = async () => {
   }
 };
 
-// reset form for new tutorial
-const newTutorial = () => {
+// reset form for new post
+const newPost = () => {
   submitted.value = false;
-  tutorial._id = null;
-  tutorial.title = "";
-  tutorial.description = "";
-  tutorial.published = false;
+  post._id = null;
+  post.title = "";
+  post.description = "";
+  post.published = false;
 
   router.push("/") 
 };

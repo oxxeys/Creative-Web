@@ -38,9 +38,6 @@
     </div>
   </div>
 
-  <v-container>
-  <v-footer border></v-footer>
-  </v-container>
 </template>
 
 <script>

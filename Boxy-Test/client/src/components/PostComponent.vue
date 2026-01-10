@@ -3,12 +3,12 @@
         <h4 style="padding-bottom: 50px;">Boxy Sightings!</h4>
         <div class="p-3 d-flex flex-column justify-content-center align-items-center ">
             <div class="cameraPost" :class="{ active: index === currentIndex }"
-                v-for="(tutorial, index) in tutorials" :key="tutorial._id" @click="setActiveTutorial(tutorial, index)">
+                v-for="(post, index) in posts" :key="post._id" @click="setActivePost(post, index)">
                 <div style="margin-bottom: 200px;" class="box-parentPost"> 
                     <div class="planePost front-plane">
-                        <p class="z-index-4 position-relative m-4 title">{{ tutorial.title }}</p>
-                        <p class="z-index-4 position-relative description">{{ tutorial.description }}</p>
-                        <p class="z-index-4 position-relative username" style="color: #fff;"> {{ tutorial.username }}</p>
+                        <p class="z-index-4 position-relative m-4 title">{{ post.title }}</p>
+                        <p class="z-index-4 position-relative description">{{ post.description }}</p>
+                        <p class="z-index-4 position-relative username" style="color: #fff;"> {{ post.username }}</p>
                     </div>
                     <div class="planePost top-plane"></div>
                     <div class="planePost bottom-plane"></div>
@@ -27,18 +27,19 @@ import { ref, onMounted } from "vue";
 import PostDataServices from "../services/PostDataServices.js";
 
 // state variables
-const tutorials = ref([]);
-const currentTutorial = ref(null);
+const posts = ref([]);
+const currentPost = ref(null);
 const currentIndex = ref(-1);
 const title = ref("");
 // const singlePostLocation = []
 
 
-// fetch all tutorials
-const retrieveTutorials = async () => {
+// fetch all posts
+const retrievePosts = async () => {
   try {
     const response = await PostDataServices.getAll();
-    tutorials.value = response.data;
+    response.data.reverse()
+    posts.value = response.data;
   } catch (e) {
     console.error(e);
   }
@@ -46,19 +47,19 @@ const retrieveTutorials = async () => {
 
 // refresh list
 const refreshList = () => {
-  retrieveTutorials();
-  currentTutorial.value = null;
+  retrievePosts();
+  currentPost.value = null;
   currentIndex.value = -1;
 };
 
-// set active tutorial
-const setActiveTutorial = (tutorial, index) => {
-  currentTutorial.value = tutorial;
+// set active post
+const setActivePost = (post, index) => {
+  currentPost.value = post;
   currentIndex.value = index;
 };
 
-// delete all tutorials
-const removeAllTutorials = async () => {
+// delete all posts
+const removeAllPosts = async () => {
   try {
     const response = await PostDataServices.deleteAll();
     // console.log(response.data);
@@ -68,19 +69,19 @@ const removeAllTutorials = async () => {
   }
 };
 
-// search tutorials by title
+// search posts by title
 const searchTitle = async () => {
   try {
     const response = await PostDataServices.findByTitle(title.value);
-    tutorials.value = response.data;
+    posts.value = response.data;
     console.log(response.data);
   } catch (e) {
     console.error(e);
   }
 };
 
-// fetch tutorials when component mounts
-onMounted(retrieveTutorials);
+// fetch posts when component mounts
+onMounted(retrievePosts);
 </script>
 
 

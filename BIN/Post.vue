@@ -30,6 +30,7 @@
 
 
 
+    
     <button
       class="badge badge-primary mr-2"
       v-if="currentTutorial.published"
@@ -64,7 +65,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import PostDataServices from "../services/PostDataServices.js";
+import PostDataServices from "../Boxy-Test/client/src/services/PostDataServices.js";
 
 // router hooks
 const route = useRoute();

@@ -60,13 +60,11 @@ const passUpdateText = ref("New Password: ")
 onMounted(async () => {
     // get username
     //make a call to the back end
-    const res = await userAuthServices.fetchUserInfo()
-    // show username 
-    console.log(res)
+    const res = await userAuthServices.fetchUserInfo() 
     username1.value = res.data.username
 })
 
-// reactive tutorial object
+// reactive post object
 const user = reactive({
     username: "",
 });
@@ -90,7 +88,7 @@ const changeUser = async () => {
 
     try {
         const response = await userAuthServices.changeUsername(data); // call login, sending in username + password which goes to db
-        console.log(response)
+        // console.log(response)
 
         // set value if username is in db 
         if (response.data.username) {
@@ -113,7 +111,7 @@ const changePassword = async () => {
 
     try {
         const response = await userAuthServices.changePassword(data); // call login, sending in username + password which goes to db
-        console.log(response)
+        // console.log(response)
 
         // set value if username is in db 
         if (response) {
