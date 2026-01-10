@@ -7,9 +7,9 @@
     <div class="col-md-12 min-vh-100 p-3 d-flex flex-column ">
 
 
-      <div class="camera d-flex flex-grow-1 flex-column justify-content-center align-items-center gap-5">
+      <div  class="camera d-flex flex-grow-1 flex-column justify-content-center align-items-center gap-5">
         <h1 class="pb-4">Where's Boxy?</h1>
-        <div class="box-parent animate">
+        <div class="box-parent box" id="boxParentToScroll">
           <!-- maunally set width to overwrite styling set for below boxes -->
           <div class="plane front-plane"></div>
           <div class="plane back-plane"></div>
@@ -18,11 +18,9 @@
           <div class="plane left-plane"></div>
           <div class="plane right-plane"></div>
         </div>
-        <p class="">boxy is an experiment with people</p> <!--  align-self-end -->
+        <p class="">boxy is an experiment with people and a box</p> <!--  align-self-end -->
       </div>
     </div>
-
-
 
     <div class="vh-100 d-flex flex-column gap-3">
       <h2>Boxys Last Seen Location!</h2>
@@ -37,8 +35,7 @@
     </div>
 
 
-    <postComponent />
-
+    <postComponent/>
   </div>
 </template>
 
@@ -47,6 +44,10 @@ import { ref, onMounted } from "vue";
 import PostDataServices from "../services/PostDataServices.js";
 import Map from "./Map.vue";
 import postComponent from "./PostComponent.vue"
+import { gsap } from "gsap";
+import ScrollTrigger from "gsap/ScrollTrigger"
+
+
 
 // state variables
 const post = ref([]);
@@ -54,7 +55,6 @@ const currentPost = ref(null);
 const currentIndex = ref(-1);
 const title = ref("");
 // const singlePostLocation = []
-
 
 // fetch all post
 // need to fetch posts here as it is the home page where map and posts are shown so data needs to be here
@@ -68,19 +68,49 @@ const retrievePosts = async () => {
   }
 };
 
-
-
-
-
 // fetch post when component mounts
 onMounted(retrievePosts);
-
-
 
 const location = ref({
   center: { lng: -5.3877, lat: 51.3794 },
   zoom: 0,
 })
+
+onMounted(() => {
+  // GSAP Code
+gsap.registerPlugin(ScrollTrigger)
+
+gsap.to("#boxParentToScroll", {
+  rotateY:360,
+  repeat:-1,
+  ease:"none",
+  duration:10,
+})
+
+let tl = gsap.timeline({
+  scrollTrigger: {
+        trigger: '.box',  // this will use the box as the trigger
+        start: "center center", //start when top of box hits 80% of screen down
+        end: "+=1000", // Sets where the animation ends - when the bottom of the element hits 300px after we've scrolled
+        // toggleActions: "restart pause resume pause",
+        scrub: true,
+        //pin: true,
+        markers: true,
+    },
+})
+
+tl.to(".bottom-plane", {y:200}, 0)
+  .to(".back-plane", {z:-400}, 0)
+  .to(".top-plane", {y:-200}, 0)
+  .to(".right-plane", {x:400}, 0)
+  .to(".left-plane", {x:-400}, 0)
+  .to(".front-plane", {z:400}, 0)
+  .to("#boxParentToScroll", {y:800}, 0)
+  .to(".plane", {opacity: 0},0) 
+
+})
+
+
 </script>
 
 <style>

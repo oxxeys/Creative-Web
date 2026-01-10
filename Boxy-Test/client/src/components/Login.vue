@@ -1,6 +1,14 @@
 <template>
-    <div class="submit-form">
-        <div v-if="!submitted">
+    <div class="submit-form d-flex justify-content-around align-items-center"
+        style="margin: 0px; min-width: 100%;min-height: 100%;">
+        <div style="max-width: 50%;"> 
+            <h2>Welcome back to Boxy!</h2>
+            <p style="color:black;display: inline-flex; margin: 0px;margin-right: 1ch;">Don't already have an account?
+            </p>
+            <RouterLink  to="/createUser" class="fw-bold text-decoration-underline" style="color:black;">Make One</RouterLink>         
+        </div>
+
+        <div class="d-flex flex-column justify-content-center gap-3">
             <div class="form-group">
                 <label for="title">Username</label>
                 <input type="text" class="form-control" id="username" required v-model="user.username"
@@ -17,10 +25,7 @@
             <button @click="loginUser" class="btn btn-success">Submit</button>
         </div>
 
-        <div v-else>
-            <h4>You logged in successfully!</h4>
-            <button class="btn btn-success" @click="newUser">Add</button>
-        </div>
+
     </div>
 </template>
 
@@ -32,16 +37,21 @@ import { loggedInBool } from "../store/loginCheck.js";
 // import router so we can push user about
 import { useRouter } from "vue-router"
 
+// submitted flag
+const submitted = ref(false);
+
 //code to check if the user is from the qr code - using url search paramerters 
 const urlParams = new URLSearchParams(window.location.search);
 const myParam = urlParams.get('qr');
 let fromQRCode
+
 console.log(myParam)
-if (myParam){
+
+if (myParam) {
     fromQRCode = true
     console.log(myParam)
 }
-else{
+else {
     console.log("not detected to be from qr code!")
 }
 
@@ -54,18 +64,8 @@ const user = reactive({
     email: "",
 });
 
-// submitted flag
-const submitted = ref(false);
 
 
-// reset form for new user
-const newUser = () => {
-    submitted.value = false
-    user._id = null
-    user.username = ""
-    user.password = ""
-    user.email = ""
-};
 
 // initialise router
 const router = useRouter()
@@ -84,13 +84,13 @@ const loginUser = async () => {
         if (response.data.username) {
             loggedInBool.value = true
             submitted.value = true
-            if (fromQRCode){
+            if (fromQRCode) {
                 router.push("/QRCreatePost")
             }
-            else{
-               router.push("/") 
+            else {
+                router.push("/")
             }
-            
+
         }
     } catch (e) {
         console.error(e);
@@ -101,8 +101,5 @@ const loginUser = async () => {
 </script>
 
 <style>
-.submit-form {
-    max-width: 300px;
-    margin: auto;
-}
+
 </style>

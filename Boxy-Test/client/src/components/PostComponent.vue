@@ -36,7 +36,8 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          more details coming soon!
+          <p>more details coming soon!</p>
+          <p>(ps we're working on )</p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" style="background-color: #E8985F; border: 1px solid black"
@@ -50,7 +51,7 @@
 
 
 <script setup>
-import { ref, onMounted, nextTick } from "vue";
+import { ref, onMounted } from "vue";
 import PostDataServices from "../services/PostDataServices.js";
 
 // state variables

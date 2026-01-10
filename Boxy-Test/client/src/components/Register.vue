@@ -1,22 +1,27 @@
-<template>
-    <div class="submit-form">
-        <div v-if="!submitted">
-            <div class="form-group">
-                <label for="title">Username</label>
-                <input type="text" class="form-control" id="username" required v-model="user.username"
-                    name="username" :maxlength="15" placeholder="Max 15 characters"/>
-            </div>
-
-            <!-- 
-      <input
+   <!-- <input
           type="text"
           class="form-control" - set the class
           id="username" - gives element a id 
           required - makes it a required element
           v-model="user.username" - listens and changes data in form upon user changing it 
           name="username"
-        />
-      -->
+        />  -->
+
+<template>
+    <div class="submit-form d-flex justify-content-around align-items-center" style="margin: 0px; min-width: 100%;min-height: 100%;">
+        <div style="max-width: 50%;">
+            <h2>Welcome to Boxy!</h2>
+            <p style="color:black;display: inline-flex; margin: 0px;margin-right: 1ch;">Already have an account?
+            </p>
+            <RouterLink  to="/" class="fw-bold text-decoration-none" style="color:black;">Log In!</RouterLink>         
+        </div>
+        <div class="d-flex flex-column justify-content-center gap-3" v-if="!submitted">
+            <div class="form-group">
+                <label for="title">Username</label>
+                <input type="text" class="form-control" id="username" required v-model="user.username"
+                    name="username" :maxlength="15" placeholder="Max 15 characters"/>
+            </div>
+
 
             <div class="form-group">
                 <!-- set label for form the id correlates to -->
@@ -82,6 +87,7 @@ const saveUser = async () => {
 
 // reset form for new user
 const newUser = () => {
+    // reset all values just in case theres an issues with the router
     submitted.value = false;
     user._id= null;
     user.username= "";

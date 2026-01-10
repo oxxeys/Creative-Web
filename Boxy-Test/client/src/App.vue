@@ -5,20 +5,16 @@
     <!-- nav bar set here -->
     <nav class="navbar navbar-expand navbar-dark bg-dark d-flex justify-content-between">
       <!-- <router-link to="/" class="navbar-brand">Boxy?</router-link> -->
-      <button type="button" class="btn" style="color: white;" data-bs-toggle="modal"
+      <button v-if="loggedIn" type="button" class="btn" style="color: white;" data-bs-toggle="modal"
         data-bs-target="#whatsBoxy">
         Boxy?
       </button>
-      <div class="navbar-nav mr-auto" style="padding-right: 30px;">
-        <!-- <li v-if="loggedIn" class="nav-item">
-          <router-link to="/profile" class="nav-link">profile</router-link>
-        </li> -->
-
-        <!-- ADD ONLY ROUTED TO IF ON MOBILE && IF CAME FROM QR CODE -->
-
-        <!-- <li v-if="loggedIn" class="nav-item">
-          <router-link to="/postAdd" class="nav-link">Add</router-link>
-        </li> -->
+      <!-- diffrent font size for this if user is not yet logged in to draw attention to the modal -->
+      <button v-if="!loggedIn" type="button" class="btn fs-3 text-decoration-underline" style="color: white; " data-bs-toggle="modal"
+        data-bs-target="#whatsBoxy" >
+        Whats Boxy?
+      </button>
+      <div class="navbar-nav" style="padding-right: 30px;">
         <li v-if="loggedIn" class="nav-item">
           <router-link to="/" class="nav-link">Home</router-link>
         </li>
@@ -46,7 +42,7 @@
 
       </div>
     </nav>
-    <div class="container mt-3">
+    <div class="container mt-3" style="height: 75vh;">
       <router-view />
     </div>
   </div>
