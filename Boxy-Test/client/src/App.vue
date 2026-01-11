@@ -32,9 +32,6 @@
         <li v-if="!loggedIn" class="nav-item">
           <router-link to="/Login" class="nav-link">Login</router-link>
         </li> 
-        <li v-if="!loggedIn" class="nav-item">
-          <router-link to="/Login?qr=true" class="nav-link">Login (post)</router-link>
-        </li>
         
         <li class="align-self">
 
