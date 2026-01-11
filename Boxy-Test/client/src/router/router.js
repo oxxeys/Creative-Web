@@ -32,12 +32,6 @@ const routes = [
     component: QRCreatePost,
     meta: { requiresAuth: true }
   },
-  // {
-  //   path: '/postAdd',
-  //   name: 'add',
-  //   component: AddPost,
-  //   meta: { requiresAuth: true }
-  // },
   {
     path: '/createUser',
     name: 'createUser',

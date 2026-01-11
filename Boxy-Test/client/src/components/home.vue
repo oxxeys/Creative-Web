@@ -92,10 +92,8 @@ let tl = gsap.timeline({
         trigger: '.box',  // this will use the box as the trigger
         start: "center center", //start when top of box hits 80% of screen down
         end: "+=1000", // Sets where the animation ends - when the bottom of the element hits 300px after we've scrolled
-        // toggleActions: "restart pause resume pause",
         scrub: true,
-        //pin: true,
-        markers: true,
+        //markers: true,
     },
 })
 
